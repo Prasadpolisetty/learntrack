@@ -2045,3 +2045,79 @@ body {
     background-position: 64% center;
   }
 }
+
+
+/* Keep the study photo present across the page while calming its contrast. */
+.site-shell .site-background:after {
+  content: "";
+  display: block !important;
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: rgba(5,5,5,.34);
+}
+.site-shell .intro-layout {
+  grid-template-columns: minmax(0,1.1fr) minmax(300px,.9fr);
+  align-items: center;
+  gap: 28px;
+}
+.site-shell .next-focus-hero {
+  width: 100%;
+  max-width: 460px;
+  margin: 12px 0;
+  padding: 22px;
+  background: rgba(12,12,12,.76);
+  border: 1px solid rgba(255,255,255,.19);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+.site-shell .learning-path-grid {
+  grid-template-columns: repeat(4,minmax(0,1fr));
+}
+.site-shell .bottom-overview-grid {
+  grid-template-columns: 1fr;
+}
+.site-shell .import-dialog {
+  width: min(560px,calc(100% - 32px));
+}
+.site-shell .import-choice-row {
+  display: grid;
+  grid-template-columns: repeat(2,minmax(0,1fr));
+  gap: 9px;
+  margin-top: 18px;
+}
+.site-shell .import-choice-row button {
+  min-height: 48px;
+  padding: 10px 13px;
+}
+.site-shell .import-cancel {
+  margin-top: 9px;
+}
+@media (max-width: 1100px) {
+  .site-shell .learning-path-grid {
+    grid-template-columns: repeat(2,minmax(0,1fr));
+  }
+}
+@media (max-width: 760px) {
+  .site-shell .site-background:after {
+    background: rgba(5,5,5,.40);
+  }
+  .site-shell .intro-layout {
+    grid-template-columns: minmax(0,1fr);
+    min-height: 0;
+    gap: 12px;
+    padding-bottom: 28px;
+  }
+  .site-shell .next-focus-hero {
+    max-width: none;
+    margin: 0 12px;
+  }
+  .site-shell .learning-path-grid {
+    grid-template-columns: 1fr;
+  }
+}
+@media (max-width: 520px) {
+  .site-shell .import-choice-row {
+    grid-template-columns: 1fr;
+  }
+}
