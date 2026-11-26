@@ -256,7 +256,7 @@ function ProgressRing({percent,size=120}) {
   const circumference=2*Math.PI*radius;
   return <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`} className="progress-ring" aria-label={percent+" percent complete"}>
     <circle cx={size/2} cy={size/2} r={radius} fill="none" stroke="#e7eee9" strokeWidth="7"/>
-    <circle cx={size/2} cy={size/2} r={radius} fill="none" stroke="#15966b" strokeWidth="7" strokeLinecap="round" strokeDasharray={circumference} strokeDashoffset={circumference*(1-percent/100)} transform={`rotate(-90 ${size/2} ${size/2})`}/>
+    <circle cx={size/2} cy={size/2} r={radius} fill="none" stroke="#171717" strokeWidth="7" strokeLinecap="round" strokeDasharray={circumference} strokeDashoffset={circumference*(1-percent/100)} transform={`rotate(-90 ${size/2} ${size/2})`}/>
   </svg>;
 }
 function Overview({completedDays,completedTasks,totalTasks,percent,projectDone,nextIndex,nextDay,progress,navigate,setFilter,setExpanded}) {
