@@ -1,9 +1,10 @@
 import { useEffect, useMemo, useState } from "react";
 import {
-  Activity, ArrowDownToLine, ArrowUpRight, BookOpen, Check,
-  CheckCircle2, ChevronDown, ChevronRight, Code2, Database,
-  ExternalLink, GraduationCap, LayoutDashboard, Play, RotateCcw,
-  Search, Target, Video
+  Activity, ArrowDownToLine, ArrowRight, ArrowUpRight, BookOpen,
+  BookOpenCheck, CalendarDays, Check, CheckCircle2, ChevronDown,
+  ChevronRight, CircleDot, Clock3, Code2, Database, ExternalLink,
+  FileText, GraduationCap, Layers3, Play, RotateCcw, Search,
+  Sparkles, Target, Video, X
 } from "lucide-react";
 
 const roadmap = [
@@ -40,16 +41,16 @@ const roadmap = [
 ];
 
 const resources = [
-  { title:"SQL YouTube playlist", type:"YouTube playlist", stage:"Week 1 · SQL", url:"https://www.youtube.com/playlist?list=PLrJjaHxyva3X6SLlYQKhuxFS1gBtmx2cY", detail:"SQL foundations and practice." },
-  { title:"Python beginner course", type:"YouTube course", stage:"Week 2 · Python", url:"https://www.youtube.com/watch?v=rfscVS0vtbw&t=2835s", detail:"A beginner-friendly Python course." },
-  { title:"Pandas video", type:"YouTube lesson", stage:"Week 2 · Pandas", url:"https://www.youtube.com/watch?v=mkYBJwX_dMs", detail:"Introduction to working with data using Pandas." },
-  { title:"NumPy video", type:"YouTube lesson", stage:"Week 2 · NumPy", url:"https://www.youtube.com/watch?v=xECXZ3tyONo", detail:"Introduction to numerical computing." },
-  { title:"Pandas Practice Dataset", type:"Kaggle dataset", stage:"Week 3 · Practice", url:"https://www.kaggle.com/datasets/themrityunjaypathak/pandas-practice-dataset", detail:"Practise loading, inspecting, cleaning and grouping data." },
-  { title:"Superstore Dataset", type:"Kaggle dataset", stage:"Week 4 · Portfolio", url:"https://www.kaggle.com/datasets/vivek468/superstore-dataset-final", detail:"Build a retail sales and profitability analysis project." },
-  { title:"SQLBolt", type:"Interactive tutorial", stage:"SQL", url:"https://sqlbolt.com/", detail:"Short interactive SQL lessons." },
-  { title:"HackerRank SQL", type:"Practice", stage:"SQL", url:"https://www.hackerrank.com/domains/sql", detail:"SQL challenge questions." },
-  { title:"Python documentation", type:"Documentation", stage:"Python", url:"https://docs.python.org/3/tutorial/", detail:"Official Python tutorial." },
-  { title:"Pandas documentation", type:"Documentation", stage:"Data analysis", url:"https://pandas.pydata.org/docs/", detail:"Pandas user guide and API reference." }
+  { title:"SQL YouTube playlist", type:"Video series", stage:"WEEK 01 · SQL", url:"https://www.youtube.com/playlist?list=PLrJjaHxyva3X6SLlYQKhuxFS1gBtmx2cY", detail:"SQL foundations and practice." },
+  { title:"Python beginner course", type:"Video course", stage:"WEEK 02 · PYTHON", url:"https://www.youtube.com/watch?v=rfscVS0vtbw&t=2835s", detail:"A beginner-friendly Python course." },
+  { title:"Pandas video", type:"Video lesson", stage:"WEEK 02 · PANDAS", url:"https://www.youtube.com/watch?v=mkYBJwX_dMs", detail:"Introduction to working with data using Pandas." },
+  { title:"NumPy video", type:"Video lesson", stage:"WEEK 02 · NUMPY", url:"https://www.youtube.com/watch?v=xECXZ3tyONo", detail:"Introduction to numerical computing." },
+  { title:"Pandas Practice Dataset", type:"Kaggle dataset", stage:"WEEK 03 · PRACTICE", url:"https://www.kaggle.com/datasets/themrityunjaypathak/pandas-practice-dataset", detail:"Practise loading, inspecting, cleaning and grouping data." },
+  { title:"Superstore Dataset", type:"Kaggle dataset", stage:"WEEK 04 · PORTFOLIO", url:"https://www.kaggle.com/datasets/vivek468/superstore-dataset-final", detail:"Build a retail sales and profitability analysis project." },
+  { title:"SQLBolt", type:"Interactive tutorial", stage:"REFERENCE · SQL", url:"https://sqlbolt.com/", detail:"Short interactive SQL lessons." },
+  { title:"HackerRank SQL", type:"Practice library", stage:"REFERENCE · SQL", url:"https://www.hackerrank.com/domains/sql", detail:"SQL challenge questions." },
+  { title:"Python documentation", type:"Documentation", stage:"REFERENCE · PYTHON", url:"https://docs.python.org/3/tutorial/", detail:"Official Python tutorial." },
+  { title:"Pandas documentation", type:"Documentation", stage:"REFERENCE · ANALYSIS", url:"https://pandas.pydata.org/docs/", detail:"Pandas user guide and API reference." }
 ];
 
 const projectTasks = [
@@ -65,106 +66,238 @@ const projectTasks = [
   "Write a README explaining the business problem and results."
 ];
 
-const KEY = "learntrack-progress-v1";
+const STORAGE_KEY = "learntrack-progress-v1";
+const chapters = [
+  {key:"SQL",number:"01",name:"Query the data",range:"DAYS 01–07",description:"SQL essentials",icon:Database},
+  {key:"Python",number:"02",name:"Speak Python",range:"DAYS 08–14",description:"Programming basics",icon:Code2},
+  {key:"Analysis",number:"03",name:"Find the story",range:"DAYS 15–21",description:"Pandas and visualisation",icon:Activity},
+  {key:"Project",number:"04",name:"Make it real",range:"DAYS 22–30",description:"Your portfolio project",icon:Target}
+];
+const navItems = [
+  ["overview","Overview",Layers3],
+  ["roadmap","The roadmap",CalendarDays],
+  ["resources","Resource shelf",BookOpen],
+  ["project","Final project",Target]
+];
+
 function readSaved() {
-  try { return JSON.parse(localStorage.getItem(KEY) || "{}"); } catch { return {}; }
+  try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}"); }
+  catch { return {}; }
 }
+
 function App() {
-  const [progress, setProgress] = useState(readSaved);
-  const [page, setPage] = useState("overview");
-  const [filter, setFilter] = useState("All");
-  const [search, setSearch] = useState("");
-  const [expanded, setExpanded] = useState(0);
-  const [toast, setToast] = useState("");
-  const [confirmReset, setConfirmReset] = useState(false);
-  useEffect(() => { localStorage.setItem(KEY, JSON.stringify(progress)); }, [progress]);
+  const [progress,setProgress] = useState(readSaved);
+  const [page,setPage] = useState("overview");
+  const [filter,setFilter] = useState("All");
+  const [search,setSearch] = useState("");
+  const [expanded,setExpanded] = useState(0);
+  const [toast,setToast] = useState("");
+  const [confirmReset,setConfirmReset] = useState(false);
+  useEffect(() => { localStorage.setItem(STORAGE_KEY,JSON.stringify(progress)); },[progress]);
+
   const completedDays = roadmap.filter((_,i) => !!progress[i]?.done).length;
-  const completedTasks = roadmap.reduce((n,d,i) => n + d[4].filter((_,j) => !!progress[i]?.tasks?.[j]).length, 0);
-  const totalTasks = roadmap.reduce((n,d) => n + d[4].length, 0);
-  const percent = Math.round(completedDays / roadmap.length * 100);
+  const completedTasks = roadmap.reduce((sum,day,i) => sum + day[4].filter((_,j) => !!progress[i]?.tasks?.[j]).length,0);
+  const totalTasks = roadmap.reduce((sum,day) => sum + day[4].length,0);
+  const percent = Math.round(completedDays/30*100);
   const projectDone = projectTasks.filter((_,i) => !!progress.project?.[i]).length;
-  const notify = (s) => { setToast(s); window.setTimeout(() => setToast(""),2500); };
-  const toggleTask = (i,j,value) => setProgress(p => {
-    const tasks = {...(p[i]?.tasks || {}),[j]:value};
-    return {...p,[i]:{...p[i],tasks,done:roadmap[i][4].every((_,k)=>!!tasks[k])}};
+  const nextIndex = roadmap.findIndex((_,i) => !progress[i]?.done);
+  const nextDay = nextIndex < 0 ? null : roadmap[nextIndex];
+
+  const notify = message => {
+    setToast(message);
+    window.setTimeout(() => setToast(""),2500);
+  };
+  const toggleTask = (dayIndex,taskIndex,value) => setProgress(current => {
+    const tasks = {...(current[dayIndex]?.tasks || {}),[taskIndex]:value};
+    return {...current,[dayIndex]:{...current[dayIndex],tasks,done:roadmap[dayIndex][4].every((_,i)=>!!tasks[i])}};
   });
-  const toggleDay = (i,value) => setProgress(p => ({...p,[i]:{done:value,tasks:Object.fromEntries(roadmap[i][4].map((_,j)=>[j,value]))}}));
-  const exportData = () => {
-    const a = document.createElement("a");
-    a.href = URL.createObjectURL(new Blob([JSON.stringify({app:"LearnTrack",progress},null,2)],{type:"application/json"}));
-    a.download = "learntrack-progress.json"; a.click(); URL.revokeObjectURL(a.href); notify("Progress backup exported");
+  const toggleDay = (dayIndex,value) => setProgress(current => ({
+    ...current,[dayIndex]:{done:value,tasks:Object.fromEntries(roadmap[dayIndex][4].map((_,i)=>[i,value]))}
+  }));
+  const exportProgress = () => {
+    const payload = {app:"LearnTrack",exportedAt:new Date().toISOString(),progress};
+    const url = URL.createObjectURL(new Blob([JSON.stringify(payload,null,2)],{type:"application/json"}));
+    const link = document.createElement("a");
+    link.href=url;link.download="learntrack-progress.json";link.click();URL.revokeObjectURL(url);
+    notify("Your progress backup is ready");
   };
-  const importData = async e => {
-    const file=e.target.files?.[0]; if(!file) return;
-    try { const d=JSON.parse(await file.text()); if(!d.progress) throw new Error("Invalid backup"); setProgress(d.progress); notify("Progress restored"); }
-    catch { notify("That file is not a valid LearnTrack backup"); }
-    e.target.value="";
+  const importProgress = async event => {
+    const file=event.target.files?.[0];
+    if(!file) return;
+    try {
+      const parsed=JSON.parse(await file.text());
+      if(!parsed.progress || typeof parsed.progress!=="object") throw new Error("Invalid backup");
+      setProgress(parsed.progress);notify("Your progress has been restored");
+    } catch { notify("This is not a valid LearnTrack backup"); }
+    event.target.value="";
   };
-  const reset = () => { setProgress({}); setConfirmReset(false); notify("Progress reset"); };
-  const filtered = useMemo(() => roadmap.map((d,i)=>({d,i})).filter(({d}) =>
-    (filter==="All" || d[0]===filter) && (d[2]+" "+d[3]).toLowerCase().includes(search.toLowerCase())
+  const resetProgress = () => {setProgress({});setConfirmReset(false);notify("Progress has been reset");};
+  const filteredDays = useMemo(() => roadmap.map((day,index)=>({day,index})).filter(({day}) =>
+    (filter==="All" || day[0]===filter) && (day[2]+" "+day[3]).toLowerCase().includes(search.toLowerCase())
   ),[filter,search]);
-  const nav = [
-    ["overview","Overview",LayoutDashboard],
-    ["roadmap","30-day roadmap",BookOpen],
-    ["resources","Videos & datasets",Play],
-    ["project","Portfolio project",Target]
-  ];
-  return <div className="app-shell">
-    <aside className="sidebar">
-      <div className="brand"><span className="brand-symbol"><GraduationCap size={21}/></span><div><b>LearnTrack</b><small>PERSONAL LEARNING SPACE</small></div></div>
-      <p className="nav-caption">WORKSPACE</p>
-      {nav.map(([id,label,Icon])=><button key={id} className={"nav-link "+(page===id?"active":"")} onClick={()=>setPage(id)}><Icon size={17}/>{label}{id==="roadmap"&&<small>30</small>}</button>)}
-      <p className="nav-caption progress-caption">YOUR PROGRESS</p>
-      <div className="side-progress"><div><span>30-day journey</span><b>{percent}%</b></div><div className="track"><i style={{width:percent+"%"}}/></div><small>{completedDays} of 30 learning days completed</small></div>
-      <div className="side-foot"><span>✦</span> Small steps, consistent progress.</div>
-    </aside>
-    <main className="main">
-      <header className="topbar"><div className="crumb">Learning workspace <ChevronRight size={14}/> <b>{nav.find(n=>n[0]===page)?.[1]}</b></div>
-        <div className="top-actions"><button onClick={exportData}><ArrowDownToLine size={15}/> Export progress</button><label className="upload-btn"><ArrowUpRight size={15}/> Import backup<input type="file" accept=".json,application/json" onChange={importData}/></label><button onClick={()=>setConfirmReset(true)}><RotateCcw size={15}/> Reset</button></div>
-      </header>
-      <div className="content">
-        {page==="overview" && <>
-          <Heading eyebrow="YOUR LEARNING DASHBOARD" title="Good progress starts here." text="Build practical SQL and Python skills, one focused session at a time."/>
-          <section className="hero"><div><label>THE NEXT 30 DAYS</label><h2>Learn the skills.<br/><em>Build something real.</em></h2><p>A structured path from SQL and Python fundamentals to a retail data-analysis portfolio project.</p><button className="primary" onClick={()=>{setPage("roadmap");setExpanded(Math.max(0,roadmap.findIndex((_,i)=>!progress[i]?.done)));}}>Continue learning <ChevronRight size={16}/></button></div><div className="hero-art"><div className="hero-orbit"/><span><GraduationCap size={40}/></span><b>SQL</b><i>PYTHON</i></div></section>
-          <div className="stats">
-            <Metric label="Days completed" value={completedDays+"/30"} sub="Learning milestones" icon={CheckCircle2}/>
-            <Metric label="Overall progress" value={percent+"%"} sub="Across the roadmap" icon={Activity}/>
-            <Metric label="Tasks checked" value={completedTasks+"/"+totalTasks} sub="Practical actions" icon={Target}/>
-            <Metric label="Project checklist" value={projectDone+"/10"} sub="Portfolio deliverables" icon={Code2}/>
-          </div>
-          <Section title="Your learning path" subtitle="Four stages. One practical outcome." action={<button className="link-button" onClick={()=>setPage("roadmap")}>View all 30 days <ArrowUpRight size={14}/></button>}/>
-          <div className="stages">{[["SQL foundations","SQL","01—07",Database],["Python foundations","Python","08—14",Code2],["Data analysis","Analysis","15—21",Activity],["Portfolio project","Project","22—30",Target]].map(([name,key,days,Icon],n)=>{const indexes=roadmap.map((d,i)=>d[0]===key?i:-1).filter(i=>i>=0);const count=indexes.filter(i=>progress[i]?.done).length;return <button className="stage" key={key} onClick={()=>{setFilter(key);setPage("roadmap");}}><div className="stage-head"><span className="stage-icon"><Icon size={19}/></span><small>STAGE 0{n+1} · {days}</small></div><b>{name}</b><span>{count} of {indexes.length} days complete</span><div className="track"><i style={{width:(count/indexes.length*100)+"%"}}/></div></button>})}</div>
-          <Section title="Keep your resources close" subtitle="Lessons and datasets from the learning plan." action={<button className="link-button" onClick={()=>setPage("resources")}>Open resources <ArrowUpRight size={14}/></button>}/>
-          <div className="resource-mini"><button onClick={()=>setPage("resources")}><Video size={19}/><span><b>Video lessons</b><small>SQL, Python, Pandas and NumPy</small></span><ChevronRight size={17}/></button><button onClick={()=>setPage("resources")}><Database size={19}/><span><b>Practice datasets</b><small>Pandas practice and Superstore</small></span><ChevronRight size={17}/></button></div>
-        </>}
-        {page==="roadmap" && <>
-          <Heading eyebrow="THE CURRICULUM" title="Your 30-day roadmap." text="Work through each day in sequence. Tick off individual tasks or complete a full day."/>
-          <div className="curr-summary"><b>{completedDays}<small>/30</small></b><span>days completed</span><div><strong>{percent}% complete</strong><div className="track"><i style={{width:percent+"%"}}/></div><small>{completedTasks} practical tasks checked</small></div></div>
-          <div className="toolbar"><div className="filters">{["All","SQL","Python","Analysis","Project"].map(f=><button className={filter===f?"selected":""} onClick={()=>setFilter(f)} key={f}>{f==="Analysis"?"Data analysis":f==="Project"?"Portfolio":f==="All"?"All days":f}</button>)}</div><label className="search"><Search size={15}/><input value={search} onChange={e=>setSearch(e.target.value)} placeholder="Search lessons..."/></label></div>
-          <div className="lesson-list">{filtered.map(({d,i})=>{const done=!!progress[i]?.done;const open=expanded===i;const count=d[4].filter((_,j)=>!!progress[i]?.tasks?.[j]).length;return <article className="lesson" key={i}><div className="lesson-row"><button className={"day-check "+(done?"is-done":"")} onClick={()=>toggleDay(i,!done)} aria-label={"Mark day "+(i+1)+" complete"}>{done&&<Check size={14}/>}</button><button className="lesson-info" onClick={()=>setExpanded(open?-1:i)}><small>DAY {String(i+1).padStart(2,"0")} · {d[0]} · {d[1]}</small><b>{d[2]}</b><span>{d[3]}</span></button><div className="lesson-actions"><small>{count}/{d[4].length}</small><button onClick={()=>setExpanded(open?-1:i)}>{open?<ChevronDown size={18}/>:<ChevronRight size={18}/>}</button></div></div>{open&&<div className="lesson-detail"><label>PRACTICAL CHECKLIST</label>{d[4].map((task,j)=><label className="task" key={j}><input type="checkbox" checked={!!progress[i]?.tasks?.[j]} onChange={e=>toggleTask(i,j,e.target.checked)}/>{task}</label>)}<div className="related"><small>RELATED LEARNING</small>{d[5].map(url=><a href={url} target="_blank" rel="noreferrer" key={url}>Open resource <ExternalLink size={12}/></a>)}</div></div>}</article>})}{filtered.length===0&&<p className="empty">No lessons found. Try another search or filter.</p>}</div>
-        </>}
-        {page==="resources" && <>
-          <Heading eyebrow="RESOURCE LIBRARY" title="Learn from the right material." text="The roadmap’s video lessons, datasets and free documentation, organised in one place."/>
-          <div className="callout"><BookOpen size={20}/><div><b>Follow the sequence</b><p>Use the Pandas Practice dataset in Week 3. Save the Superstore dataset for your Week 4 portfolio project.</p></div></div>
-          <div className="resource-grid">{resources.map((r,i)=><a href={r.url} target="_blank" rel="noreferrer" className="resource-card" key={r.title}><span className="resource-icon">{r.type.includes("YouTube")?<Play size={18}/>:r.type.includes("Kaggle")?<Database size={18}/>:<BookOpen size={18}/>}</span><span><small>{r.type} · {r.stage}</small><b>{r.title}</b><p>{r.detail}</p></span><ExternalLink size={15}/></a>)}</div>
-        </>}
-        {page==="project" && <>
-          <Heading eyebrow="FINAL DELIVERABLE" title="Build your first portfolio project." text="A retail sales and profitability analysis that brings SQL and Python together."/>
-          <section className="project-hero"><small>CAPSTONE PROJECT · DAYS 22–30</small><h2>Retail Sales &<br/>Profitability Analysis</h2><p>Help a retail business understand revenue, profit, product categories and regional performance using a real-world dataset.</p><a className="primary" href="https://www.kaggle.com/datasets/vivek468/superstore-dataset-final" target="_blank" rel="noreferrer">Get the Superstore dataset <ExternalLink size={15}/></a></section>
-          <div className="project-progress"><b>{projectDone}/10</b><div><div className="track"><i style={{width:(projectDone/10*100)+"%"}}/></div><small>{projectDone*10}% of project steps completed</small></div></div>
-          <Section title="Project completion checklist" subtitle="Tick each deliverable as you finish it."/>
-          <div className="project-list">{projectTasks.map((t,i)=><label key={i} className="project-task"><input type="checkbox" checked={!!progress.project?.[i]} onChange={e=>setProgress(p=>({...p,project:{...p.project,[i]:e.target.checked}}))}/><small>{String(i+1).padStart(2,"0")}</small><span>{t}</span>{progress.project?.[i]&&<CheckCircle2 size={16}/>}</label>)}</div>
-          <div className="callout"><Code2 size={20}/><div><b>Suggested GitHub structure</b><pre>retail-sales-analysis/<br/>├── notebooks/<br/>├── sql/<br/>├── reports/<br/>├── visualisations/<br/>└── README.md</pre></div></div>
-        </>}
+  const navigate = id => {setPage(id);window.scrollTo({top:0,behavior:"smooth"});};
+  const activeLabel = navItems.find(item=>item[0]===page)?.[1] || "Overview";
+
+  return <div className="site-shell">
+    <header className="site-header">
+      <a className="brand-lockup" href="#top" onClick={e=>{e.preventDefault();navigate("overview");}}>
+        <span className="brand-mark"><GraduationCap size={21}/></span>
+        <span className="brand-copy"><strong>learntrack<span>.</span></strong><small>LEARN WITH INTENTION</small></span>
+      </a>
+      <nav className="main-nav" aria-label="Main navigation">
+        {navItems.map(([id,label,Icon])=><button key={id} className={page===id?"nav-tab nav-tab-active":"nav-tab"} onClick={()=>navigate(id)}><Icon size={15}/>{label}</button>)}
+      </nav>
+      <div className="header-tools">
+        <button className="tool-button export-button" onClick={exportProgress}><ArrowDownToLine size={15}/><span>Export</span></button>
+        <label className="tool-button import-button"><ArrowUpRight size={15}/><span>Import</span><input type="file" accept=".json,application/json" onChange={importProgress}/></label>
       </div>
-      <footer><b>LEARNTRACK</b><span>Progress is saved in this browser · No account required</span></footer>
+    </header>
+
+    <main id="top" className="main-content">
+      {page==="overview" && <Overview
+        completedDays={completedDays} completedTasks={completedTasks} totalTasks={totalTasks}
+        percent={percent} projectDone={projectDone} nextIndex={nextIndex} nextDay={nextDay}
+        progress={progress} navigate={navigate} setFilter={setFilter} setExpanded={setExpanded}
+      />}
+
+      {page==="roadmap" && <section className="page-section">
+        <PageIntro eyebrow="THE 30-DAY ROUTE" title={<>A clear path.<br/><span>Visible progress.</span></>} text="Move from first queries to a portfolio you can confidently explain. Every day has a small, practical outcome."/>
+        <div className="roadmap-overview glass-panel">
+          <div className="roadmap-overview-number"><strong>{completedDays.toString().padStart(2,"0")}</strong><span>/ 30 DAYS</span></div>
+          <div className="roadmap-overview-bar"><div className="overview-bar-top"><b>{percent}% completed</b><span>{completedTasks} of {totalTasks} tasks checked</span></div><div className="progress-line"><span style={{width:percent+"%"}}/></div></div>
+          <div className="roadmap-overview-note"><span className="pulse-dot"/>Your progress is saved on this device</div>
+        </div>
+        <div className="lesson-toolbar">
+          <div className="filter-list">{["All","SQL","Python","Analysis","Project"].map(item=><button key={item} className={filter===item?"filter-button filter-active":"filter-button"} onClick={()=>setFilter(item)}>{item==="All"?"All days":item==="Analysis"?"Data analysis":item==="Project"?"Portfolio":item}</button>)}</div>
+          <label className="search-field"><Search size={16}/><input value={search} onChange={e=>setSearch(e.target.value)} placeholder="Find a lesson..."/>{search&&<button onClick={()=>setSearch("")} aria-label="Clear search"><X size={14}/></button>}</label>
+        </div>
+        <div className="roadmap-layout">
+          <div className="lesson-stack">
+            {filteredDays.map(({day,index})=>{
+              const done=!!progress[index]?.done;
+              const open=expanded===index;
+              const checked=day[4].filter((_,j)=>!!progress[index]?.tasks?.[j]).length;
+              return <article className={done?"lesson-card lesson-complete":"lesson-card"} key={index}>
+                <div className="lesson-card-main">
+                  <button className={done?"lesson-toggle lesson-toggle-done":"lesson-toggle"} onClick={()=>toggleDay(index,!done)} aria-label={"Mark Day "+(index+1)+" complete"}>{done&&<Check size={15}/>}</button>
+                  <button className="lesson-open" onClick={()=>setExpanded(open?-1:index)}>
+                    <span className="lesson-kicker">DAY {String(index+1).padStart(2,"0")} <i/> {day[0]} <i/> {day[1]}</span>
+                    <strong>{day[2]}</strong><small>{day[3]}</small>
+                  </button>
+                  <span className="lesson-completion">{checked}/{day[4].length}</span>
+                  <button className="lesson-chevron" onClick={()=>setExpanded(open?-1:index)} aria-label={open?"Collapse lesson":"Expand lesson"}>{open?<ChevronDown size={18}/>:<ChevronRight size={18}/>}</button>
+                </div>
+                {open&&<div className="lesson-expanded">
+                  <div className="expanded-label">YOUR PRACTICE CHECKLIST</div>
+                  {day[4].map((task,j)=><label className="check-row" key={j}><input type="checkbox" checked={!!progress[index]?.tasks?.[j]} onChange={e=>toggleTask(index,j,e.target.checked)}/><span>{task}</span></label>)}
+                  <div className="lesson-resources"><span>OPEN A LEARNING RESOURCE</span>{day[5].map(url=><a key={url} href={url} target="_blank" rel="noreferrer">Study this topic <ExternalLink size={13}/></a>)}</div>
+                </div>}
+              </article>;
+            })}
+            {filteredDays.length===0&&<div className="empty-state"><Search size={22}/><strong>No lessons match that search.</strong><span>Try a different phrase or choose another topic.</span></div>}
+          </div>
+          <aside className="roadmap-aside glass-panel">
+            <span className="aside-overline">YOUR LEARNING RHYTHM</span>
+            <div className="mini-ring"><ProgressRing percent={percent} size={108}/><div><b>{percent}%</b><small>complete</small></div></div>
+            <h3>Progress over perfection.</h3>
+            <p>Small sessions add up. Complete a task, mark the day, and keep moving forward.</p>
+            <div className="aside-stat"><span>Days completed</span><b>{completedDays} / 30</b></div>
+            <div className="aside-stat"><span>Tasks completed</span><b>{completedTasks} / {totalTasks}</b></div>
+            <button className="text-action" onClick={exportProgress}>Save a progress backup <ArrowUpRight size={14}/></button>
+          </aside>
+        </div>
+      </section>}
+
+      {page==="resources" && <section className="page-section">
+        <PageIntro eyebrow="THE RESOURCE SHELF" title={<>Good resources.<br/><span>Better practice.</span></>} text="Lessons, documentation and real datasets selected to support each stage of the roadmap."/>
+        <div className="resource-feature glass-panel">
+          <div className="resource-feature-icon"><Database size={24}/></div>
+          <div><span className="eyebrow">YOUR DATA PRACTICE TOOLKIT</span><h2>Learn it. Try it. Apply it.</h2><p>Use the Pandas Practice dataset while learning data manipulation. Keep the Superstore dataset for your final portfolio project.</p></div>
+          <div className="feature-count"><strong>10</strong><span>CURATED LINKS</span></div>
+        </div>
+        <div className="resource-section-head"><div><span className="eyebrow">ALL MATERIALS</span><h2>Explore the shelf</h2></div><span className="subtle-count">{resources.length} RESOURCES</span></div>
+        <div className="resource-grid">
+          {resources.map((item,index)=><a className="resource-tile" key={item.url} href={item.url} target="_blank" rel="noreferrer">
+            <div className="resource-tile-top"><span className={"resource-kind kind-"+(item.type.includes("Kaggle")?"dataset":item.type.includes("Video")?"video":"reference")}>{item.type.includes("Kaggle")?<Database size={17}/>:item.type.includes("Video")?<Play size={17}/>:<FileText size={17}/>}</span><span className="resource-index">{String(index+1).padStart(2,"0")}</span></div>
+            <span className="resource-stage">{item.stage}</span><strong>{item.title}</strong><p>{item.detail}</p><span className="resource-open">Open resource <ArrowUpRight size={14}/></span>
+          </a>)}
+        </div>
+      </section>}
+
+      {page==="project" && <section className="page-section">
+        <PageIntro eyebrow="THE CAPSTONE" title={<>Turn skills into<br/><span>proof of work.</span></>} text="Bring SQL, Python and analysis together in one portfolio project built around a real retail dataset."/>
+        <div className="capstone-panel">
+          <div className="capstone-copy"><span className="capstone-tag"><Sparkles size={14}/> YOUR FINAL DELIVERABLE</span><h2>Retail sales<br/> &amp; profitability.</h2><p>Investigate what sells, what earns profit, and how performance changes across products, categories and regions.</p><a className="jade-button" href="https://www.kaggle.com/datasets/vivek468/superstore-dataset-final" target="_blank" rel="noreferrer">Get the Superstore dataset <ArrowUpRight size={16}/></a></div>
+          <div className="capstone-diagram"><div className="diagram-window"><div className="diagram-bar"><i/><i/><i/><span>SALES_ANALYSIS.PY</span></div><div className="diagram-lines"><b/><b/><b/><b/><b/><i/><i/><b/></div><div className="diagram-footer"><span>SQL</span><span>PYTHON</span><span>INSIGHTS</span></div></div><span className="diagram-caption">FROM RAW DATA TO BUSINESS INSIGHT</span></div>
+        </div>
+        <div className="project-summary-row"><div><span className="eyebrow">PROJECT CHECKLIST</span><h2>{projectDone} <small>/ 10 complete</small></h2></div><div className="project-summary-track"><div className="progress-line"><span style={{width:(projectDone/10*100)+"%"}}/></div><span>{projectDone*10}% of your deliverables are complete</span></div></div>
+        <div className="project-checklist-grid">
+          {projectTasks.map((task,index)=><label className={progress.project?.[index]?"project-check project-check-done":"project-check"} key={index}>
+            <input type="checkbox" checked={!!progress.project?.[index]} onChange={e=>setProgress(current=>({...current,project:{...current.project,[index]:e.target.checked}}))}/>
+            <span className="project-number">{String(index+1).padStart(2,"0")}</span><span className="project-task-copy">{task}</span><span className="project-tick"><Check size={14}/></span>
+          </label>)}
+        </div>
+        <div className="github-note glass-panel"><span><Code2 size={20}/></span><div><b>A clean repository tells the story.</b><p>Keep notebooks, SQL scripts, visualisations and your findings organised so someone can understand the work quickly.</p><code>notebooks/ · sql/ · reports/ · visualisations/ · README.md</code></div></div>
+      </section>}
     </main>
-    {confirmReset&&<div className="modal-bg"><div className="modal"><b>Reset your learning progress?</b><p>This clears all checked days, tasks and portfolio steps saved in this browser.</p><div><button onClick={()=>setConfirmReset(false)}>Cancel</button><button className="danger" onClick={reset}>Reset progress</button></div></div></div>}
-    {toast&&<div className="toast"><CheckCircle2 size={16}/>{toast}</div>}
+
+    <footer className="site-footer"><a className="footer-brand" href="#top" onClick={e=>{e.preventDefault();navigate("overview");}}>learntrack<span>.</span></a><span>Made for steady progress, not perfect streaks.</span><div><span>30 DAYS</span><i/> <span>SQL + PYTHON</span></div></footer>
+
+    {confirmReset&&<div className="modal-backdrop" onClick={()=>setConfirmReset(false)}><div className="confirm-dialog" role="dialog" aria-modal="true" onClick={e=>e.stopPropagation()}><span className="confirm-icon"><RotateCcw size={19}/></span><h3>Start with a clean slate?</h3><p>This clears completed days, tasks and portfolio steps saved in this browser. Export a backup first if you may need it.</p><div><button className="soft-button" onClick={()=>setConfirmReset(false)}>Keep my progress</button><button className="jade-button" onClick={resetProgress}>Reset progress</button></div></div></div>}
+    {toast&&<div className="toast-message"><CheckCircle2 size={16}/>{toast}</div>}
   </div>;
 }
-function Heading({eyebrow,title,text}){return <div className="heading"><small>{eyebrow}</small><h1>{title}</h1><p>{text}</p></div>}
-function Metric({label,value,sub,icon:Icon}){return <div className="metric"><div><span>{label}</span><i><Icon size={17}/></i></div><b>{value}</b><small>{sub}</small></div>}
-function Section({title,subtitle,action}){return <div className="section-head"><div><h2>{title}</h2><p>{subtitle}</p></div>{action}</div>}
+
+function PageIntro({eyebrow,title,text}) {
+  return <div className="page-intro"><span className="eyebrow">{eyebrow}</span><h1>{title}</h1><p>{text}</p></div>;
+}
+function ProgressRing({percent,size=120}) {
+  const radius=(size-12)/2;
+  const circumference=2*Math.PI*radius;
+  return <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`} className="progress-ring" aria-label={percent+" percent complete"}>
+    <circle cx={size/2} cy={size/2} r={radius} fill="none" stroke="#e7eee9" strokeWidth="7"/>
+    <circle cx={size/2} cy={size/2} r={radius} fill="none" stroke="#15966b" strokeWidth="7" strokeLinecap="round" strokeDasharray={circumference} strokeDashoffset={circumference*(1-percent/100)} transform={`rotate(-90 ${size/2} ${size/2})`}/>
+  </svg>;
+}
+function Overview({completedDays,completedTasks,totalTasks,percent,projectDone,nextIndex,nextDay,progress,navigate,setFilter,setExpanded}) {
+  const stageStats=chapters.map(chapter=>{
+    const indexes=roadmap.map((day,index)=>day[0]===chapter.key?index:-1).filter(index=>index>=0);
+    const done=indexes.filter(index=>progress[index]?.done).length;
+    return {...chapter,done,total:indexes.length,pct:Math.round(done/indexes.length*100)};
+  });
+  const nextTasks=nextDay?.[4] || [];
+  return <section className="overview-page">
+    <div className="welcome-topline"><span className="eyebrow">A PERSONAL SPACE TO GET BETTER WITH DATA</span><span className="welcome-date"><CircleDot size={12}/> YOUR LEARNING JOURNEY</span></div>
+    <div className="intro-layout">
+      <div className="intro-copy">
+        <h1>Make data your<br/><em>next language.</em></h1>
+        <p>Thirty thoughtful days to go from first SQL queries to Python-powered analysis — with a real project to show for it.</p>
+        <div className="intro-actions"><button className="jade-button" onClick={()=>{navigate("roadmap");setExpanded(Math.max(0,nextIndex));}}> {nextDay?("Pick up at day "+String(nextIndex+1).padStart(2,"0")):"Review your roadmap"} <ArrowUpRight size={16}/></button><button className="quiet-link" onClick={()=>navigate("resources")}>Browse learning material <ArrowRight size={15}/></button></div>
+        <div className="intro-facts"><span><b>30</b> focused days</span><i/><span><b>4</b> learning chapters</span><i/><span><b>1</b> portfolio project</span></div>
+      </div>
+      <div className="progress-showcase glass-panel">
+        <div className="showcase-heading"><span>YOUR MOMENTUM</span><span className="live-indicator"><i/> SAVED ON THIS DEVICE</span></div>
+        <div className="showcase-middle"><div className="ring-wrap"><ProgressRing percent={percent} size={144}/><div className="ring-value"><strong>{percent}<small>%</small></strong><span>COMPLETE</span></div></div><div className="showcase-stats"><div><small>DAYS FINISHED</small><b>{completedDays}<span> / 30</span></b></div><div><small>TASKS CHECKED</small><b>{completedTasks}<span> / {totalTasks}</span></b></div><div><small>PROJECT STEPS</small><b>{projectDone}<span> / 10</span></b></div></div></div>
+        <div className="showcase-foot"><span>Keep your own pace.</span><span>Every day counts <Sparkles size={13}/></span></div>
+      </div>
+    </div>
+    <div className="chapter-heading"><div><span className="eyebrow">THE LEARNING ARC</span><h2>Four chapters. One new skillset.</h2></div><button className="text-action" onClick={()=>navigate("roadmap")}>See all 30 days <ArrowUpRight size={15}/></button></div>
+    <div className="chapter-grid">
+      {stageStats.map(chapter=><button className="chapter-card" key={chapter.key} onClick={()=>{setFilter(chapter.key);navigate("roadmap");}}>
+        <div className="chapter-card-top"><span className="chapter-number">{chapter.number}</span><span className="chapter-icon"><chapter.icon size={19}/></span></div>
+        <span className="chapter-range">{chapter.range}</span><h3>{chapter.name}</h3><p>{chapter.description}</p>
+        <div className="chapter-progress"><div className="progress-line"><span style={{width:chapter.pct+"%"}}/></div><span>{chapter.done}/{chapter.total}</span></div>
+      </button>)}
+    </div>
+    <div className="bottom-overview-grid">
+      <section className="next-focus glass-panel">
+        <div className="focus-label"><span className="eyebrow">YOUR NEXT SESSION</span><span className="focus-day">{nextDay?"DAY "+String(nextIndex+1).padStart(2,"0"):"ALL DAYS COMPLETE"}</span></div>
+        {nextDay?<><h2>{nextDay[2]}</h2><p>{nextDay[3]}</p><div className="focus-checklist">{nextTasks.slice(0,2).map((task,index)=><div key={index}><span>{index+1}</span>{task}</div>)}</div><button className="focus-link" onClick={()=>{navigate("roadmap");setExpanded(nextIndex);}}>Open this lesson <ArrowRight size={15}/></button></>:<><h2>You made it through the roadmap.</h2><p>Take a look at your final portfolio deliverable and keep practising.</p><button className="focus-link" onClick={()=>navigate("project")}>Review your project <ArrowRight size={15}/></button></>}
+      </section>
+      <section className="learning-note">
+        <span className="note-icon"><BookOpenCheck size={20}/></span><span className="eyebrow">A NOTE ON CONSISTENCY</span><h2>Progress is a practice, not a race.</h2><p>Some days will be easier than others. The checklist is here to make the next step clear — not to make you feel behind.</p><button className="text-action" onClick={()=>navigate("resources")}>Find your next resource <ArrowUpRight size={15}/></button>
+      </section>
+    </div>
+  </section>;
+}
 export default App;
