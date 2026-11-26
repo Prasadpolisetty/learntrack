@@ -413,3 +413,324 @@ body {
 .jade-button:hover {
   box-shadow: 0 2px 7px rgba(24, 42, 30, .07) !important;
 }
+
+
+/* STRICT BLACK / WHITE SYSTEM
+   Jade is reserved exclusively for the moment a button is actively pressed.
+*/
+:root {
+  color-scheme: light;
+  --ink: #171717;
+  --muted: #777777;
+  --line: rgba(0,0,0,.12);
+  --jade: #15966b;
+  --jade-dark: #087a54;
+  --jade-pale: #f3f3f3;
+}
+
+html, body, #root, .site-shell {
+  color: #171717;
+  background: #fff !important;
+}
+.site-shell:before {
+  background: none !important;
+}
+::selection {
+  background: rgba(0,0,0,.13);
+  color: #111;
+}
+
+/* Brand, headings, labels and icons */
+.site-shell .brand-mark,
+.site-shell .chapter-icon,
+.site-shell .note-icon,
+.site-shell .resource-feature-icon,
+.site-shell .resource-kind,
+.site-shell .kind-dataset,
+.site-shell .kind-video,
+.site-shell .kind-reference,
+.site-shell .confirm-icon,
+.site-shell .github-note>span,
+.site-shell .focus-checklist>div span {
+  color: #282828 !important;
+  background: rgba(0,0,0,.045) !important;
+  border-color: rgba(0,0,0,.10) !important;
+}
+.site-shell .brand-copy strong span,
+.site-shell .footer-brand span,
+.site-shell .eyebrow,
+.site-shell .welcome-date svg,
+.site-shell .intro-copy h1 em,
+.site-shell .page-intro h1 span,
+.site-shell .ring-value strong small,
+.site-shell .showcase-foot span:last-child,
+.site-shell .focus-day,
+.site-shell .focus-link,
+.site-shell .lesson-kicker,
+.site-shell .lesson-resources a,
+.site-shell .resource-stage,
+.site-shell .resource-open,
+.site-shell .capstone-tag,
+.site-shell .feature-count strong,
+.site-shell .diagram-footer,
+.site-shell .github-note code,
+.site-shell .confirm-icon {
+  color: #292929 !important;
+}
+.site-shell .brand-copy strong span,
+.site-shell .footer-brand span {
+  color: #171717 !important;
+}
+.site-shell .eyebrow,
+.site-shell .chapter-range,
+.site-shell .resource-stage,
+.site-shell .capstone-tag,
+.site-shell .diagram-footer,
+.site-shell .lesson-kicker,
+.site-shell .expanded-label,
+.site-shell .lesson-resources>span {
+  letter-spacing: inherit;
+}
+.site-shell .welcome-date svg,
+.site-shell .showcase-foot span:last-child svg {
+  color: #555 !important;
+}
+
+/* Navigation and utility controls stay monochrome when idle or hovered */
+.site-shell .main-nav,
+.site-shell .site-header {
+  background: rgba(255,255,255,.24) !important;
+  border-color: rgba(0,0,0,.10) !important;
+  box-shadow: 0 5px 20px rgba(0,0,0,.025) !important;
+}
+.site-shell .nav-tab,
+.site-shell .nav-tab:hover,
+.site-shell .nav-tab-active,
+.site-shell .tool-button,
+.site-shell .tool-button:hover,
+.site-shell .quiet-link,
+.site-shell .quiet-link:hover,
+.site-shell .text-action,
+.site-shell .text-action:hover,
+.site-shell .focus-link,
+.site-shell .focus-link:hover,
+.site-shell .filter-button,
+.site-shell .filter-button:hover,
+.site-shell .filter-active,
+.site-shell .lesson-chevron,
+.site-shell .lesson-chevron:hover,
+.site-shell .soft-button,
+.site-shell .soft-button:hover {
+  color: #333 !important;
+  border-color: rgba(0,0,0,.13) !important;
+}
+.site-shell .nav-tab,
+.site-shell .nav-tab-active,
+.site-shell .tool-button,
+.site-shell .filter-button,
+.site-shell .filter-active,
+.site-shell .search-field,
+.site-shell .soft-button {
+  background: rgba(255,255,255,.42) !important;
+}
+.site-shell .nav-tab-active,
+.site-shell .filter-active {
+  background: rgba(0,0,0,.055) !important;
+  border-color: rgba(0,0,0,.12) !important;
+}
+.site-shell .search-field {
+  border-color: rgba(0,0,0,.14) !important;
+  color: #777 !important;
+}
+.site-shell .search-field input {
+  color: #171717 !important;
+}
+.site-shell .search-field input::placeholder {
+  color: #888 !important;
+}
+
+/* Primary action buttons are black at rest; jade appears only while pressed */
+.site-shell .jade-button,
+.site-shell .jade-button:hover {
+  color: #fff !important;
+  background: #171717 !important;
+  border-color: #171717 !important;
+  box-shadow: 0 3px 10px rgba(0,0,0,.08) !important;
+}
+.site-shell .jade-button:active,
+.site-shell button:active {
+  color: #fff !important;
+  background: var(--jade) !important;
+  border-color: var(--jade) !important;
+  box-shadow: none !important;
+}
+.site-shell button:focus-visible,
+.site-shell a:focus-visible,
+.site-shell input:focus-visible {
+  outline: 2px solid rgba(0,0,0,.55);
+  outline-offset: 3px;
+}
+
+/* Progress, status and completion states are monochrome */
+.site-shell .live-indicator i,
+.site-shell .pulse-dot {
+  background: #555 !important;
+  box-shadow: none !important;
+}
+.site-shell .progress-ring circle:first-child {
+  stroke: #e7e7e7 !important;
+}
+.site-shell .progress-ring circle:nth-child(2) {
+  stroke: #171717 !important;
+}
+.site-shell .progress-line span {
+  background: #171717 !important;
+}
+.site-shell .focus-day {
+  background: rgba(0,0,0,.05) !important;
+  border-color: rgba(0,0,0,.12) !important;
+}
+.site-shell .lesson-toggle,
+.site-shell .lesson-toggle:hover,
+.site-shell .lesson-toggle-done {
+  color: #fff !important;
+  background: #242424 !important;
+  border-color: #242424 !important;
+}
+.site-shell .lesson-toggle:not(.lesson-toggle-done) {
+  color: transparent !important;
+  background: rgba(255,255,255,.7) !important;
+  border-color: #c9c9c9 !important;
+}
+.site-shell .lesson-toggle:active {
+  color: #fff !important;
+  background: var(--jade) !important;
+  border-color: var(--jade) !important;
+}
+.site-shell .check-row input,
+.site-shell .project-check input {
+  accent-color: #222 !important;
+}
+.site-shell .lesson-complete {
+  background: rgba(0,0,0,.025) !important;
+  border-color: rgba(0,0,0,.12) !important;
+}
+.site-shell .project-check-done {
+  background: rgba(0,0,0,.035) !important;
+  border-color: rgba(0,0,0,.13) !important;
+}
+.site-shell .project-tick,
+.site-shell .project-check-done .project-tick {
+  color: #fff !important;
+  background: #292929 !important;
+}
+.site-shell .lesson-kicker i {
+  background: #aaa !important;
+}
+
+/* Glass surfaces remain translucent, with neutral edges and neutral shadows */
+.site-shell .glass-panel,
+.site-shell .progress-showcase,
+.site-shell .next-focus,
+.site-shell .roadmap-overview,
+.site-shell .roadmap-aside,
+.site-shell .chapter-card,
+.site-shell .lesson-card,
+.site-shell .lesson-expanded,
+.site-shell .resource-feature,
+.site-shell .resource-tile,
+.site-shell .capstone-panel,
+.site-shell .project-check,
+.site-shell .github-note,
+.site-shell .diagram-window,
+.site-shell .confirm-dialog,
+.site-shell .toast-message {
+  border-color: rgba(0,0,0,.10) !important;
+  box-shadow: 0 8px 24px rgba(0,0,0,.035), inset 0 1px 0 rgba(255,255,255,.35) !important;
+}
+.site-shell .glass-panel,
+.site-shell .progress-showcase,
+.site-shell .next-focus,
+.site-shell .roadmap-overview,
+.site-shell .roadmap-aside,
+.site-shell .chapter-card,
+.site-shell .lesson-card,
+.site-shell .lesson-expanded,
+.site-shell .resource-feature,
+.site-shell .resource-tile,
+.site-shell .capstone-panel,
+.site-shell .project-check,
+.site-shell .github-note,
+.site-shell .diagram-window {
+  background: rgba(255,255,255,.19) !important;
+}
+.site-shell .chapter-card:hover,
+.site-shell .lesson-card:hover,
+.site-shell .resource-tile:hover,
+.site-shell .project-check:hover {
+  background: rgba(255,255,255,.34) !important;
+  border-color: rgba(0,0,0,.17) !important;
+  box-shadow: 0 8px 24px rgba(0,0,0,.045) !important;
+}
+.site-shell .progress-showcase:before,
+.site-shell .chapter-card:after {
+  content: none !important;
+}
+.site-shell .learning-note {
+  border-color: rgba(0,0,0,.13) !important;
+}
+.site-shell .lesson-expanded {
+  background: rgba(0,0,0,.018) !important;
+}
+.site-shell .capstone-panel {
+  background: rgba(255,255,255,.20) !important;
+}
+.site-shell .diagram-lines b,
+.site-shell .diagram-lines i,
+.site-shell .diagram-lines b:nth-child(2),
+.site-shell .diagram-lines b:nth-child(3),
+.site-shell .diagram-lines b:nth-child(4),
+.site-shell .diagram-lines b:last-child {
+  background: rgba(0,0,0,.14) !important;
+}
+.site-shell .confirm-dialog,
+.site-shell .toast-message {
+  background: rgba(255,255,255,.88) !important;
+  color: #252525 !important;
+}
+.site-shell .toast-message {
+  border-color: rgba(0,0,0,.13) !important;
+}
+.site-shell .github-note code {
+  background: rgba(0,0,0,.045) !important;
+}
+.site-shell .empty-state {
+  border-color: rgba(0,0,0,.20) !important;
+}
+.site-shell .lesson-resources a:hover,
+.site-shell .resource-open:hover {
+  color: #111 !important;
+}
+
+@media (prefers-reduced-transparency: reduce) {
+  .site-shell .site-header,
+  .site-shell .main-nav,
+  .site-shell .glass-panel,
+  .site-shell .progress-showcase,
+  .site-shell .next-focus,
+  .site-shell .roadmap-overview,
+  .site-shell .roadmap-aside,
+  .site-shell .chapter-card,
+  .site-shell .lesson-card,
+  .site-shell .resource-feature,
+  .site-shell .resource-tile,
+  .site-shell .capstone-panel,
+  .site-shell .project-check,
+  .site-shell .github-note,
+  .site-shell .confirm-dialog,
+  .site-shell .toast-message {
+    background: rgba(255,255,255,.92) !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
+}
