@@ -239,3 +239,142 @@ button{color:inherit}
 @media(max-width:1000px){.site-header{width:calc(100% - 40px)}.main-content,.site-footer{width:calc(100% - 40px)}.intro-layout{gap:24px}.chapter-grid{grid-template-columns:repeat(2,1fr)}.roadmap-layout{grid-template-columns:minmax(0,1fr) 230px}.resource-grid{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:760px){.site-header{width:calc(100% - 30px);padding:13px 0;min-height:auto;display:grid;grid-template-columns:1fr auto;gap:13px}.brand-lockup{min-width:0}.header-tools{min-width:0}.main-nav{grid-column:1/-1;grid-row:2;justify-content:space-between;width:100%;padding:4px}.nav-tab{padding:8px 9px;font-size:9px}.nav-tab svg{display:none}.main-content,.site-footer{width:calc(100% - 30px)}.welcome-topline{padding-top:29px}.welcome-date{display:none}.intro-layout{grid-template-columns:1fr;gap:22px;padding:13px 0 39px}.intro-copy h1{font-size:clamp(47px,11vw,66px)}.intro-copy>p{font-size:12px;margin:17px 0 19px}.intro-facts{margin-top:23px;gap:9px;font-size:8px}.progress-showcase{padding:18px}.showcase-middle{gap:18px}.ring-wrap{transform:scale(.9)}.chapter-heading h2{font-size:19px}.chapter-grid{gap:8px}.chapter-card{min-height:175px;padding:13px}.chapter-card h3{font-size:13px}.chapter-card p{font-size:8px}.bottom-overview-grid{grid-template-columns:1fr;gap:8px}.learning-note{border-left:0;border-top:1px solid rgba(21,150,107,.16);padding:19px 5px}.page-section{padding-top:33px}.page-intro h1{font-size:clamp(41px,10vw,57px)}.roadmap-overview{flex-wrap:wrap;gap:11px;padding:14px}.roadmap-overview-number{min-width:62px}.roadmap-overview-bar{min-width:55%}.roadmap-overview-note{width:100%}.lesson-toolbar{align-items:stretch;flex-direction:column}.search-field{width:100%}.roadmap-layout{grid-template-columns:1fr}.roadmap-aside{position:static;display:grid;grid-template-columns:1fr 1fr;gap:8px;align-items:center}.aside-overline{grid-column:1/-1}.mini-ring{grid-row:2/5;margin:0}.roadmap-aside h3{align-self:end}.roadmap-aside>p{grid-column:2}.aside-stat,.roadmap-aside .text-action{grid-column:1/-1}.resource-feature{padding:16px;gap:12px}.resource-feature h2{font-size:16px}.resource-feature p{font-size:9px}.resource-feature-icon{height:39px;width:39px}.feature-count{display:none}.capstone-panel{grid-template-columns:1fr;padding:22px}.capstone-diagram{max-width:420px;width:100%;margin:auto}.project-summary-row{align-items:flex-start;flex-direction:column;gap:10px}.project-summary-track{width:100%}.project-checklist-grid{grid-template-columns:1fr}.site-footer{min-height:70px;flex-wrap:wrap;padding:13px 0}.site-footer>span{display:none}}
 @media(max-width:420px){.header-tools .tool-button{padding:8px 9px}.nav-tab{padding:8px 7px;font-size:8px}.intro-actions{gap:10px}.jade-button{padding:12px 14px;font-size:10px}.quiet-link{font-size:9px}.intro-facts{flex-wrap:wrap}.chapter-grid{grid-template-columns:1fr 1fr}.chapter-card{min-height:165px}.showcase-middle{gap:6px}.showcase-stats b{font-size:18px}.showcase-stats small{font-size:6px}.lesson-card-main{gap:8px;padding:12px 10px}.lesson-expanded{padding:12px}.lesson-open strong{font-size:11px}.lesson-open small{font-size:8px}.lesson-completion{font-size:7px}.roadmap-aside{grid-template-columns:1fr 1fr;padding:14px}.resource-grid{grid-template-columns:1fr}.resource-tile{min-height:160px}.resource-feature{align-items:flex-start}.resource-feature p{font-size:8px}.confirm-dialog>div{justify-content:stretch}.confirm-dialog>div button{flex:1}}
+
+/* FULL-PAGE TRANSPARENT GLASS TREATMENT
+   White remains the canvas/theme; interface surfaces are translucent.
+*/
+html, body, #root, .site-shell {
+  background: transparent !important;
+}
+body {
+  background-color: transparent !important;
+}
+.site-shell {
+  isolation: isolate;
+}
+.site-shell:before {
+  position: fixed;
+  inset: 0;
+  height: 100vh;
+  z-index: -1;
+  background:
+    radial-gradient(ellipse at 12% 14%, rgba(21,150,107,.075), transparent 38%),
+    radial-gradient(ellipse at 88% 20%, rgba(93,184,139,.10), transparent 36%),
+    radial-gradient(ellipse at 60% 92%, rgba(21,150,107,.055), transparent 42%),
+    linear-gradient(135deg, rgba(245,251,247,.24), rgba(255,255,255,.05));
+}
+.site-header {
+  background: rgba(255,255,255,.12);
+  backdrop-filter: blur(26px);
+  -webkit-backdrop-filter: blur(26px);
+  border-bottom-color: rgba(39,75,57,.075);
+}
+.main-nav {
+  background: rgba(255,255,255,.17);
+  border-color: rgba(255,255,255,.58);
+  box-shadow: 0 8px 30px rgba(35,82,53,.035);
+}
+.tool-button,
+.search-field,
+.filter-button,
+.lesson-card,
+.chapter-card,
+.resource-tile,
+.project-check,
+.resource-feature,
+.roadmap-overview,
+.roadmap-aside,
+.progress-showcase,
+.next-focus,
+.capstone-panel,
+.github-note {
+  background-color: rgba(255,255,255,.17) !important;
+  backdrop-filter: blur(28px) saturate(135%);
+  -webkit-backdrop-filter: blur(28px) saturate(135%);
+  border-color: rgba(255,255,255,.62);
+  box-shadow: 0 12px 38px rgba(32,68,46,.035), inset 0 1px 0 rgba(255,255,255,.42);
+}
+.glass-panel {
+  background: rgba(255,255,255,.15) !important;
+  border-color: rgba(255,255,255,.64);
+  outline-color: rgba(39,75,57,.075);
+  box-shadow: 0 15px 48px rgba(32,68,46,.035), inset 0 1px 0 rgba(255,255,255,.5);
+}
+.chapter-card {
+  background: rgba(255,255,255,.13) !important;
+}
+.chapter-card:hover,
+.resource-tile:hover,
+.project-check:hover,
+.lesson-card:hover {
+  background: rgba(255,255,255,.30) !important;
+}
+.lesson-complete,
+.project-check-done {
+  background: rgba(21,150,107,.075) !important;
+}
+.lesson-expanded {
+  background: rgba(255,255,255,.09) !important;
+}
+.search-field,
+.filter-button {
+  background: rgba(255,255,255,.12) !important;
+}
+.filter-active,
+.nav-tab-active {
+  background: rgba(21,150,107,.10) !important;
+}
+.brand-mark,
+.chapter-icon,
+.note-icon,
+.resource-feature-icon,
+.resource-kind,
+.kind-dataset,
+.kind-video,
+.kind-reference,
+.focus-checklist>div span,
+.project-tick {
+  background-color: rgba(21,150,107,.055);
+}
+.capstone-panel {
+  background: rgba(255,255,255,.12) !important;
+  border-color: rgba(21,150,107,.16);
+}
+.diagram-window {
+  background: rgba(255,255,255,.20);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+}
+.roadmap-aside {
+  background: rgba(255,255,255,.14) !important;
+}
+.confirm-dialog {
+  background: rgba(255,255,255,.68);
+  backdrop-filter: blur(32px);
+  -webkit-backdrop-filter: blur(32px);
+  border-color: rgba(255,255,255,.8);
+}
+.toast-message {
+  background: rgba(255,255,255,.62);
+  backdrop-filter: blur(28px);
+  -webkit-backdrop-filter: blur(28px);
+}
+.jade-button,
+.jade-button:hover,
+.jade-button:active {
+  color: #fff;
+}
+.jade-button:active {
+  background: #075d40;
+}
+@media (prefers-reduced-transparency: reduce) {
+  .site-header,.main-nav,.tool-button,.glass-panel,.chapter-card,.lesson-card,
+  .resource-tile,.resource-feature,.roadmap-overview,.roadmap-aside,
+  .progress-showcase,.next-focus,.capstone-panel,.project-check,.confirm-dialog,
+  .toast-message {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    background: rgba(255,255,255,.84) !important;
+  }
+}
+
