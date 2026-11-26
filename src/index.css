@@ -2047,14 +2047,14 @@ body {
 }
 
 
-/* Keep the study photo present across the page while calming its contrast. */
+/* Keep the study photo present across the page with a low contrast treatment. */
 .site-shell .site-background:after {
   content: "";
   display: block !important;
   position: absolute;
   inset: 0;
   pointer-events: none;
-  background: rgba(5,5,5,.34);
+  background: rgba(5,5,5,.52);
 }
 .site-shell .intro-layout {
   grid-template-columns: minmax(0,1.1fr) minmax(300px,.9fr);
@@ -2100,7 +2100,7 @@ body {
 }
 @media (max-width: 760px) {
   .site-shell .site-background:after {
-    background: rgba(5,5,5,.40);
+    background: rgba(5,5,5,.58);
   }
   .site-shell .intro-layout {
     grid-template-columns: minmax(0,1fr);
