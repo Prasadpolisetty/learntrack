@@ -377,3 +377,39 @@ body {
   }
 }
 
+
+
+/* NO-NEON FINISH
+   Keep the glass UI restrained: no luminous gradients, green glow, or halo effects.
+*/
+.site-shell:before {
+  background: none !important;
+}
+.jade-button,
+.jade-button:hover,
+.jade-button:active,
+.glass-panel,
+.chapter-card:hover,
+.resource-tile:hover,
+.diagram-window,
+.confirm-dialog,
+.toast-message,
+.main-nav,
+.tool-button,
+.progress-showcase,
+.chapter-card,
+.resource-tile {
+  box-shadow: 0 6px 20px rgba(24, 42, 30, .045) !important;
+}
+.progress-showcase:before,
+.chapter-card:after {
+  box-shadow: none !important;
+}
+.live-indicator i,
+.pulse-dot {
+  box-shadow: none !important;
+}
+.jade-button,
+.jade-button:hover {
+  box-shadow: 0 2px 7px rgba(24, 42, 30, .07) !important;
+}
