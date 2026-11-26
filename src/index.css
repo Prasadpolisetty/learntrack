@@ -769,7 +769,7 @@ body {
   inset: 0;
   z-index: 0;
   pointer-events: none;
-  background-image: url("/learntrack-background.svg");
+  background-image: url("./learntrack-background.svg");
   background-repeat: no-repeat;
   background-position: right -55px top 70px;
   background-size: min(1080px, 88vw) auto;
