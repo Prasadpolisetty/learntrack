@@ -1896,3 +1896,66 @@ body {
     height: 34px;
   }
 }
+
+
+/* BACKGROUND VISIBILITY FIX
+   The photographic hero is an opaque dark image, intentionally blended with
+   translucent black overlays. Keep it above the page canvas and below content.
+*/
+.site-shell .overview-page {
+  position: relative;
+  isolation: isolate;
+}
+.site-shell .overview-page > * {
+  position: relative;
+  z-index: 1;
+}
+.site-shell .overview-page:before {
+  content: "";
+  position: absolute;
+  z-index: 0;
+  pointer-events: none;
+  top: -18px;
+  left: -38px;
+  right: -38px;
+  height: 815px;
+  border-radius: 20px;
+  background-image:
+    linear-gradient(90deg,
+      rgba(5,5,5,.88) 0%,
+      rgba(5,5,5,.72) 30%,
+      rgba(5,5,5,.35) 58%,
+      rgba(5,5,5,.12) 100%),
+    linear-gradient(0deg,
+      rgba(5,5,5,.78) 0%,
+      rgba(5,5,5,.18) 34%,
+      rgba(5,5,5,0) 76%),
+    url("./learntrack-hero.webp");
+  background-size: cover;
+  background-position: center 46%;
+  background-repeat: no-repeat;
+  opacity: 1;
+}
+.site-shell .intro-layout:before {
+  display: none !important;
+}
+@media (max-width: 760px) {
+  .site-shell .overview-page:before {
+    top: 0;
+    left: -12px;
+    right: -12px;
+    height: 710px;
+    background-image:
+      linear-gradient(90deg,
+        rgba(5,5,5,.90) 0%,
+        rgba(5,5,5,.72) 47%,
+        rgba(5,5,5,.28) 100%),
+      linear-gradient(0deg,
+        rgba(5,5,5,.82) 0%,
+        rgba(5,5,5,.10) 52%,
+        rgba(5,5,5,0) 100%),
+      url("./learntrack-hero.webp");
+    background-size: cover;
+    background-position: 67% top;
+  }
+}
