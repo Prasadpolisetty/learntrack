@@ -54,6 +54,14 @@ const resources = [
   { title:"Pandas documentation", type:"Documentation", stage:"REFERENCE · ANALYSIS", url:"https://pandas.pydata.org/docs/", detail:"Pandas user guide and API reference." }
 ];
 
+
+const forageExperiences = [
+  { title:"Data Analytics — Deloitte Australia", type:"Forage job simulation", stage:"1–2 HOURS · TABLEAU", url:"https://www.theforage.com/simulations/deloitte-au/data-analytics-s5zy", detail:"Explore client telemetry and build a Tableau dashboard." },
+  { title:"Data Analytics — KPMG Australia", type:"Forage job simulation", stage:"3–4 HOURS · CUSTOMER ANALYTICS", url:"https://www.theforage.com/simulations/kpmg-au/data-analytics-y7gh", detail:"Assess data quality, segment customers and recommend target groups." },
+  { title:"Data Visualisation — Tata", type:"Forage job simulation", stage:"3–4 HOURS · TABLEAU / POWER BI", url:"https://www.theforage.com/simulations/tata/data-visualisation-p5xo", detail:"Turn business questions into clear visuals and actionable insights." },
+  { title:"Data for Decision Makers — BCG", type:"Forage job simulation", stage:"1–2 HOURS · INTRODUCTORY", url:"https://www.theforage.com/simulations/bcg/data-for-decision-makers-tod0", detail:"Analyze real-world data, spot patterns and shape recommendations." }
+];
+
 const projectTasks = [
   "Download the Superstore dataset and check its licence.",
   "Inspect fields and document data quality.",
@@ -256,6 +264,13 @@ function App() {
           <div className="resource-feature-icon"><Database size={24}/></div>
           <div><span className="eyebrow">YOUR DATA PRACTICE TOOLKIT</span><h2>Learn it. Try it. Apply it.</h2><p>Use the Pandas Practice dataset while learning data manipulation. Keep the Superstore dataset for your final portfolio project.</p></div>
           <div className="feature-count"><strong>10</strong><span>CURATED LINKS</span></div>
+        </div>
+        <div className="resource-section-head forage-section-head"><div><h2>Forage job simulations</h2><p>Build analyst skills through self-paced, project-based scenarios. These are learning simulations, not employment or internship positions.</p></div><a className="resource-open forage-browse" href="https://www.theforage.com/simulations" target="_blank" rel="noreferrer">Browse Forage <ArrowUpRight size={14}/></a></div>
+        <div className="resource-grid forage-grid">
+          {forageExperiences.map((item,index)=><a className="resource-tile" key={item.url} href={item.url} target="_blank" rel="noreferrer">
+            <div className="resource-tile-top"><span className="resource-kind kind-reference"><GraduationCap size={17}/></span><span className="resource-index">{String(index+1).padStart(2,"0")}</span></div>
+            <span className="resource-stage">{item.stage}</span><strong>{item.title}</strong><p>{item.detail}</p><span className="resource-open">Open simulation <ArrowUpRight size={14}/></span>
+          </a>)}
         </div>
         <div className="resource-section-head"><div><span className="eyebrow">ALL MATERIALS</span><h2>Explore the shelf</h2></div><span className="subtle-count">{resources.length} RESOURCES</span></div>
         <div className="resource-grid">
