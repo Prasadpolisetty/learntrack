@@ -1,12 +1,12 @@
 {
   "name": "LearnTrack — SQL + Python Learning Tracker",
   "short_name": "LearnTrack",
-  "description": "A 30-day SQL and Python learning tracker.",
+  "description": "A focused 30-day journey through SQL, Python and practical data analysis.",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
-  "background_color": "#0b0c0b",
-  "theme_color": "#10110f",
+  "background_color": "#ffffff",
+  "theme_color": "#ffffff",
   "icons": [
     {
       "src": "./icon.svg",
