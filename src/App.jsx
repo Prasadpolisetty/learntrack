@@ -74,10 +74,11 @@ const chapters = [
   {key:"Project",number:"04",name:"Make it real",range:"DAYS 22–30",description:"Your portfolio project",icon:Target}
 ];
 const navItems = [
-  ["overview","Overview",Layers3],
-  ["roadmap","The roadmap",CalendarDays],
-  ["resources","Resource shelf",BookOpen],
-  ["project","Final project",Target]
+  ["overview","Dashboard",Layers3],
+  ["roadmap","Roadmap",CalendarDays],
+  ["resources","Resources",BookOpen],
+  ["project","Project",Target],
+  ["progress","Progress",Activity]
 ];
 
 function readSaved() {
@@ -158,6 +159,11 @@ function App() {
         completedDays={completedDays} completedTasks={completedTasks} totalTasks={totalTasks}
         percent={percent} projectDone={projectDone} nextIndex={nextIndex} nextDay={nextDay}
         progress={progress} navigate={navigate} setFilter={setFilter} setExpanded={setExpanded}
+      />}
+
+      {page==="progress" && <ProgressPage
+        completedDays={completedDays} completedTasks={completedTasks} totalTasks={totalTasks}
+        percent={percent} projectDone={projectDone} progress={progress} navigate={navigate}
       />}
 
       {page==="roadmap" && <section className="page-section">
@@ -260,43 +266,170 @@ function ProgressRing({percent,size=120}) {
   </svg>;
 }
 function Overview({completedDays,completedTasks,totalTasks,percent,projectDone,nextIndex,nextDay,progress,navigate,setFilter,setExpanded}) {
-  const stageStats=chapters.map(chapter=>{
-    const indexes=roadmap.map((day,index)=>day[0]===chapter.key?index:-1).filter(index=>index>=0);
-    const done=indexes.filter(index=>progress[index]?.done).length;
-    return {...chapter,done,total:indexes.length,pct:Math.round(done/indexes.length*100)};
+  const learningPaths = [
+    {
+      title:"SQL Learning",
+      range:"DAYS 01–07",
+      detail:"From database basics to confident real-data queries.",
+      icon:Database,
+      indexes:roadmap.map((day,index)=>day[0]==="SQL"?index:-1).filter(index=>index>=0),
+      firstIndex:0,
+      filter:"SQL"
+    },
+    {
+      title:"Python & Data Analysis",
+      range:"DAYS 08–21",
+      detail:"Learn Python, Pandas and how to find meaning in data.",
+      icon:Code2,
+      indexes:roadmap.map((day,index)=>(day[0]==="Python"||day[0]==="Analysis")?index:-1).filter(index=>index>=0),
+      firstIndex:7,
+      filter:"All"
+    },
+    {
+      title:"Portfolio Project",
+      range:"DAYS 22–30",
+      detail:"Bring your skills together in a practical retail project.",
+      icon:Layers3,
+      indexes:roadmap.map((day,index)=>day[0]==="Project"?index:-1).filter(index=>index>=0),
+      firstIndex:21,
+      filter:"Project"
+    }
+  ].map(item=>{
+    const done=item.indexes.filter(index=>!!progress[index]?.done).length;
+    return {...item,done,total:item.indexes.length,percent:Math.round(done/item.indexes.length*100)};
   });
-  const nextTasks=nextDay?.[4] || [];
+
   return <section className="overview-page">
-    <div className="welcome-topline"><span className="eyebrow">A PERSONAL SPACE TO GET BETTER WITH DATA</span><span className="welcome-date"><CircleDot size={12}/> YOUR LEARNING JOURNEY</span></div>
+    <div className="welcome-topline">
+      <span className="eyebrow">YOUR 30-DAY LEARNING JOURNEY</span>
+      <span className="welcome-date"><CircleDot size={12}/> LEARN WITH INTENTION</span>
+    </div>
+
     <div className="intro-layout">
       <div className="intro-copy">
-        <h1>Make data your<br/><em>next language.</em></h1>
-        <p>Thirty thoughtful days to go from first SQL queries to Python-powered analysis — with a real project to show for it.</p>
-        <div className="intro-actions"><button className="jade-button" onClick={()=>{navigate("roadmap");setExpanded(Math.max(0,nextIndex));}}> {nextDay?("Pick up at day "+String(nextIndex+1).padStart(2,"0")):"Review your roadmap"} <ArrowUpRight size={16}/></button><button className="quiet-link" onClick={()=>navigate("resources")}>Browse learning material <ArrowRight size={15}/></button></div>
-        <div className="intro-facts"><span><b>30</b> focused days</span><i/><span><b>4</b> learning chapters</span><i/><span><b>1</b> portfolio project</span></div>
-      </div>
-      <div className="progress-showcase glass-panel">
-        <div className="showcase-heading"><span>YOUR MOMENTUM</span><span className="live-indicator"><i/> SAVED ON THIS DEVICE</span></div>
-        <div className="showcase-middle"><div className="ring-wrap"><ProgressRing percent={percent} size={144}/><div className="ring-value"><strong>{percent}<small>%</small></strong><span>COMPLETE</span></div></div><div className="showcase-stats"><div><small>DAYS FINISHED</small><b>{completedDays}<span> / 30</span></b></div><div><small>TASKS CHECKED</small><b>{completedTasks}<span> / {totalTasks}</span></b></div><div><small>PROJECT STEPS</small><b>{projectDone}<span> / 10</span></b></div></div></div>
-        <div className="showcase-foot"><span>Keep your own pace.</span><span>Every day counts <Sparkles size={13}/></span></div>
+        <span className="hero-kicker">SQL · PYTHON · REAL-WORLD PRACTICE</span>
+        <h1>Build your<br/><em>Data Skills.</em></h1>
+        <p>A practical, step-by-step plan to learn SQL and Python, apply them to real data, and build a portfolio project you can show with confidence.</p>
+        <div className="intro-actions">
+          <button className="jade-button" onClick={()=>{navigate("roadmap");setFilter("All");setExpanded(Math.max(0,nextIndex));}}>
+            {nextDay?("Start with Day "+String(nextIndex+1).padStart(2,"0")):"Review your roadmap"} <ArrowRight size={16}/>
+          </button>
+          <button className="outline-button" onClick={()=>navigate("roadmap")}><CalendarDays size={16}/> View Roadmap</button>
+        </div>
       </div>
     </div>
-    <div className="chapter-heading"><div><span className="eyebrow">THE LEARNING ARC</span><h2>Four chapters. One new skillset.</h2></div><button className="text-action" onClick={()=>navigate("roadmap")}>See all 30 days <ArrowUpRight size={15}/></button></div>
-    <div className="chapter-grid">
-      {stageStats.map(chapter=><button className="chapter-card" key={chapter.key} onClick={()=>{setFilter(chapter.key);navigate("roadmap");}}>
-        <div className="chapter-card-top"><span className="chapter-number">{chapter.number}</span><span className="chapter-icon"><chapter.icon size={19}/></span></div>
-        <span className="chapter-range">{chapter.range}</span><h3>{chapter.name}</h3><p>{chapter.description}</p>
-        <div className="chapter-progress"><div className="progress-line"><span style={{width:chapter.pct+"%"}}/></div><span>{chapter.done}/{chapter.total}</span></div>
-      </button>)}
+
+    <div className="metric-grid" id="progress-summary">
+      <article className="metric-card">
+        <span className="metric-icon"><Target size={25}/></span>
+        <div className="metric-copy"><strong>30 Days</strong><span>Learning Plan</span></div>
+      </article>
+      <article className="metric-card">
+        <span className="metric-icon"><Layers3 size={25}/></span>
+        <div className="metric-copy"><strong>2 Core Skills</strong><span>SQL · Python</span></div>
+      </article>
+      <article className="metric-card">
+        <span className="metric-icon"><Code2 size={25}/></span>
+        <div className="metric-copy"><strong>1 Project</strong><span>Portfolio Ready</span></div>
+      </article>
+      <article className="metric-card metric-progress">
+        <span className="metric-icon"><Activity size={25}/></span>
+        <div className="metric-copy metric-progress-copy">
+          <strong>Your Progress</strong><span>{percent}% Complete · {completedDays}/30 days</span>
+          <div className="progress-line"><span style={{width:percent+"%"}}/></div>
+        </div>
+      </article>
     </div>
+
+    <section className="learning-section">
+      <div className="learning-section-heading">
+        <div>
+          <span className="eyebrow">THE LEARNING PATH</span>
+          <h2>Your Learning Path</h2>
+          <p>Follow a structured plan, track your progress, and build real skills.</p>
+        </div>
+        <button className="text-action roadmap-action" onClick={()=>navigate("roadmap")}>Go to Roadmap <ArrowRight size={15}/></button>
+      </div>
+
+      <div className="learning-path-grid">
+        {learningPaths.map((item,index)=>{
+          const Icon=item.icon;
+          return <article
+            className="learning-path-card"
+            key={item.title}
+            role="button"
+            tabIndex={0}
+            onClick={()=>{setFilter(item.filter);navigate("roadmap");setExpanded(item.firstIndex);}}
+            onKeyDown={event=>{if(event.key==="Enter"||event.key===" "){event.preventDefault();setFilter(item.filter);navigate("roadmap");setExpanded(item.firstIndex);}}}
+          >
+            <div className="learning-path-top">
+              <span className="learning-path-icon"><Icon size={25}/></span>
+              <span className="learning-path-index">0{index+1}</span>
+            </div>
+            <span className="learning-path-range">{item.range}</span>
+            <h3>{item.title}</h3>
+            <p>{item.detail}</p>
+            <div className="learning-path-foot">
+              <div className="progress-line"><span style={{width:item.percent+"%"}}/></div>
+              <span>{item.done}/{item.total}</span>
+              <ArrowRight size={17}/>
+            </div>
+          </article>;
+        })}
+      </div>
+    </section>
+
     <div className="bottom-overview-grid">
       <section className="next-focus glass-panel">
-        <div className="focus-label"><span className="eyebrow">YOUR NEXT SESSION</span><span className="focus-day">{nextDay?"DAY "+String(nextIndex+1).padStart(2,"0"):"ALL DAYS COMPLETE"}</span></div>
-        {nextDay?<><h2>{nextDay[2]}</h2><p>{nextDay[3]}</p><div className="focus-checklist">{nextTasks.slice(0,2).map((task,index)=><div key={index}><span>{index+1}</span>{task}</div>)}</div><button className="focus-link" onClick={()=>{navigate("roadmap");setExpanded(nextIndex);}}>Open this lesson <ArrowRight size={15}/></button></>:<><h2>You made it through the roadmap.</h2><p>Take a look at your final portfolio deliverable and keep practising.</p><button className="focus-link" onClick={()=>navigate("project")}>Review your project <ArrowRight size={15}/></button></>}
+        <div className="focus-label"><span className="eyebrow">PICK UP WHERE YOU LEFT OFF</span><span className="focus-day">{nextDay?"DAY "+String(nextIndex+1).padStart(2,"0"):"ALL DAYS COMPLETE"}</span></div>
+        {nextDay?<><h2>{nextDay[2]}</h2><p>{nextDay[3]}</p><div className="focus-checklist">{nextDay[4].slice(0,2).map((task,index)=><div key={index}><span>{index+1}</span>{task}</div>)}</div><button className="focus-link" onClick={()=>{navigate("roadmap");setFilter("All");setExpanded(nextIndex);}}>Continue Learning <ArrowRight size={15}/></button></>:<><h2>You completed the 30-day roadmap.</h2><p>Review your portfolio project and keep building on what you have learned.</p><button className="focus-link" onClick={()=>navigate("project")}>Review your project <ArrowRight size={15}/></button></>}
       </section>
       <section className="learning-note">
-        <span className="note-icon"><BookOpenCheck size={20}/></span><span className="eyebrow">A NOTE ON CONSISTENCY</span><h2>Progress is a practice, not a race.</h2><p>Some days will be easier than others. The checklist is here to make the next step clear — not to make you feel behind.</p><button className="text-action" onClick={()=>navigate("resources")}>Find your next resource <ArrowUpRight size={15}/></button>
+        <span className="note-icon"><BookOpenCheck size={20}/></span>
+        <span className="eyebrow">A NOTE ON CONSISTENCY</span>
+        <h2>Progress is a practice, not a race.</h2>
+        <p>Small sessions add up. Use each checklist to make the next step clear and keep moving at your own pace.</p>
+        <button className="text-action" onClick={()=>navigate("resources")}>Explore learning resources <ArrowUpRight size={14}/></button>
       </section>
+    </div>
+  </section>;
+}
+
+function ProgressPage({completedDays,completedTasks,totalTasks,percent,projectDone,progress,navigate}) {
+  const chapterStats=chapters.map(chapter=>{
+    const indexes=roadmap.map((day,index)=>day[0]===chapter.key?index:-1).filter(index=>index>=0);
+    const done=indexes.filter(index=>!!progress[index]?.done).length;
+    return {...chapter,done,total:indexes.length,percent:Math.round(done/indexes.length*100)};
+  });
+  return <section className="page-section progress-page">
+    <PageIntro eyebrow="YOUR LEARNING JOURNEY" title={<>Small steps.<br/><span>Visible progress.</span></>} text="A clear view of the work you have completed and the skills you are building."/>
+    <div className="progress-page-overview glass-panel">
+      <div className="progress-page-ring">
+        <ProgressRing percent={percent} size={156}/>
+        <div><strong>{percent}%</strong><span>COMPLETE</span></div>
+      </div>
+      <div className="progress-page-copy">
+        <span className="eyebrow">OVERALL COMPLETION</span>
+        <h2>{completedDays===30?"You completed the roadmap.":"You are building momentum."}</h2>
+        <p>{completedDays} of 30 learning days completed, with {completedTasks} of {totalTasks} practice tasks checked off.</p>
+        <button className="jade-button" onClick={()=>navigate("roadmap")}>Continue the Roadmap <ArrowRight size={16}/></button>
+      </div>
+    </div>
+    <div className="metric-grid progress-metric-grid">
+      <article className="metric-card"><span className="metric-icon"><CalendarDays size={24}/></span><div className="metric-copy"><strong>{completedDays}/30</strong><span>Days completed</span></div></article>
+      <article className="metric-card"><span className="metric-icon"><CheckCircle2 size={24}/></span><div className="metric-copy"><strong>{completedTasks}/{totalTasks}</strong><span>Practice tasks</span></div></article>
+      <article className="metric-card"><span className="metric-icon"><Layers3 size={24}/></span><div className="metric-copy"><strong>{projectDone}/10</strong><span>Project steps</span></div></article>
+      <article className="metric-card"><span className="metric-icon"><Target size={24}/></span><div className="metric-copy"><strong>{30-completedDays}</strong><span>Days remaining</span></div></article>
+    </div>
+    <div className="progress-chapters">
+      <div className="learning-section-heading"><div><span className="eyebrow">CHAPTER BREAKDOWN</span><h2>Progress by topic</h2><p>See how far you have moved through each stage.</p></div></div>
+      <div className="progress-chapter-list glass-panel">
+        {chapterStats.map(chapter=><div className="progress-chapter-row" key={chapter.key}>
+          <div className="progress-chapter-icon"><chapter.icon size={20}/></div>
+          <div className="progress-chapter-details"><strong>{chapter.name}</strong><span>{chapter.range}</span><div className="progress-line"><span style={{width:chapter.percent+"%"}}/></div></div>
+          <span className="progress-chapter-count">{chapter.done}/{chapter.total}</span>
+        </div>)}
+      </div>
     </div>
   </section>;
 }
