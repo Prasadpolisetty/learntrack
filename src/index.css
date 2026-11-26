@@ -734,3 +734,365 @@ html, body, #root, .site-shell {
     -webkit-backdrop-filter: none !important;
   }
 }
+
+
+/* LEARNTRACK DARK GLASS THEME
+   Black canvas, white/grey interface, transparent monochrome illustration.
+   Jade is used only for hovered or pressed buttons.
+*/
+:root {
+  color-scheme: dark;
+  --ink: #f5f5f5;
+  --muted: #a3a3a3;
+  --line: rgba(255,255,255,.14);
+  --jade: #15966b;
+  --jade-dark: #087a54;
+  --jade-pale: rgba(255,255,255,.06);
+}
+html, body, #root {
+  min-height: 100%;
+  background: #050505 !important;
+  color: #f5f5f5 !important;
+}
+body {
+  background: #050505 !important;
+}
+.site-shell {
+  min-height: 100vh;
+  isolation: isolate;
+  background: #050505 !important;
+  color: #f5f5f5 !important;
+}
+.site-shell:before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image: url("./learntrack-background.svg");
+  background-repeat: no-repeat;
+  background-position: right -55px top 70px;
+  background-size: min(1080px, 88vw) auto;
+  opacity: .48;
+}
+.site-header, .main-content, .site-footer {
+  position: relative;
+  z-index: 1;
+}
+.site-shell, .site-shell * {
+  color: #f2f2f2;
+}
+.site-shell .site-header {
+  background: rgba(5,5,5,.42) !important;
+  border-bottom-color: rgba(255,255,255,.13) !important;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+.site-shell .main-nav,
+.site-shell .tool-button,
+.site-shell .search-field,
+.site-shell .filter-button,
+.site-shell .soft-button {
+  background: rgba(255,255,255,.035) !important;
+  border-color: rgba(255,255,255,.15) !important;
+  box-shadow: none !important;
+}
+.site-shell .main-nav {
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+}
+.site-shell .glass-panel,
+.site-shell .progress-showcase,
+.site-shell .next-focus,
+.site-shell .roadmap-overview,
+.site-shell .roadmap-aside,
+.site-shell .chapter-card,
+.site-shell .lesson-card,
+.site-shell .lesson-expanded,
+.site-shell .resource-feature,
+.site-shell .resource-tile,
+.site-shell .capstone-panel,
+.site-shell .project-check,
+.site-shell .github-note,
+.site-shell .diagram-window,
+.site-shell .confirm-dialog,
+.site-shell .toast-message {
+  background: rgba(255,255,255,.035) !important;
+  border-color: rgba(255,255,255,.13) !important;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.035), 0 12px 32px rgba(0,0,0,.18) !important;
+  backdrop-filter: blur(22px);
+  -webkit-backdrop-filter: blur(22px);
+}
+.site-shell .chapter-card:hover,
+.site-shell .resource-tile:hover,
+.site-shell .lesson-card:hover,
+.site-shell .project-check:hover {
+  background: rgba(255,255,255,.065) !important;
+  border-color: rgba(255,255,255,.22) !important;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.045), 0 14px 34px rgba(0,0,0,.22) !important;
+}
+.site-shell .lesson-expanded {
+  background: rgba(255,255,255,.025) !important;
+  border-top-color: rgba(255,255,255,.10) !important;
+}
+.site-shell .modal-backdrop {
+  background: rgba(0,0,0,.74) !important;
+}
+.site-shell .confirm-dialog,
+.site-shell .toast-message {
+  background: rgba(18,18,18,.94) !important;
+  border-color: rgba(255,255,255,.16) !important;
+}
+.site-shell .confirm-icon,
+.site-shell .brand-mark,
+.site-shell .chapter-icon,
+.site-shell .note-icon,
+.site-shell .resource-feature-icon,
+.site-shell .resource-kind,
+.site-shell .kind-dataset,
+.site-shell .kind-video,
+.site-shell .kind-reference,
+.site-shell .github-note>span,
+.site-shell .focus-checklist>div span,
+.site-shell .project-tick {
+  background: rgba(255,255,255,.065) !important;
+  border-color: rgba(255,255,255,.13) !important;
+  color: #f2f2f2 !important;
+}
+
+/* Main content stays white; secondary copy uses neutral grey only. */
+.site-shell .intro-copy h1,
+.site-shell .page-intro h1,
+.site-shell .chapter-heading h2,
+.site-shell .resource-section-head h2,
+.site-shell .next-focus h2,
+.site-shell .learning-note h2,
+.site-shell .capstone-copy h2,
+.site-shell .roadmap-aside h3,
+.site-shell .lesson-open strong,
+.site-shell .brand-copy strong,
+.site-shell .footer-brand,
+.site-shell .project-summary-row h2,
+.site-shell .showcase-stats b,
+.site-shell .ring-value strong,
+.site-shell .roadmap-overview-number strong,
+.site-shell .feature-count strong {
+  color: #fff !important;
+}
+.site-shell .intro-copy>p,
+.site-shell .page-intro p,
+.site-shell .chapter-card p,
+.site-shell .resource-tile>p,
+.site-shell .next-focus>p,
+.site-shell .learning-note p,
+.site-shell .capstone-copy p,
+.site-shell .roadmap-aside>p,
+.site-shell .lesson-open small,
+.site-shell .lesson-completion,
+.site-shell .project-task-copy,
+.site-shell .github-note p,
+.site-shell .showcase-foot,
+.site-shell .showcase-stats small,
+.site-shell .ring-value>span,
+.site-shell .welcome-date,
+.site-shell .intro-facts,
+.site-shell .chapter-range,
+.site-shell .roadmap-overview-number span,
+.site-shell .overview-bar-top span,
+.site-shell .roadmap-overview-note,
+.site-shell .aside-overline,
+.site-shell .aside-stat,
+.site-shell .subtle-count,
+.site-shell .resource-index,
+.site-shell .resource-feature p,
+.site-shell .diagram-caption,
+.site-shell .site-footer,
+.site-shell .brand-copy small,
+.site-shell .empty-state span {
+  color: #a6a6a6 !important;
+}
+.site-shell .aside-stat b,
+.site-shell .intro-facts b,
+.site-shell .empty-state strong {
+  color: #ededed !important;
+}
+.site-shell .eyebrow,
+.site-shell .chapter-number,
+.site-shell .lesson-kicker,
+.site-shell .expanded-label,
+.site-shell .lesson-resources>span,
+.site-shell .resource-stage,
+.site-shell .resource-open,
+.site-shell .capstone-tag,
+.site-shell .diagram-footer,
+.site-shell .feature-count span {
+  color: #bdbdbd !important;
+}
+.site-shell .brand-copy strong span,
+.site-shell .footer-brand span,
+.site-shell .intro-copy h1 em,
+.site-shell .page-intro h1 span,
+.site-shell .ring-value strong small {
+  color: #fff !important;
+}
+.site-shell .progress-showcase:before,
+.site-shell .chapter-card:after {
+  display: none !important;
+}
+.site-shell .diagram-lines b,
+.site-shell .diagram-lines i,
+.site-shell .diagram-lines b:nth-child(2),
+.site-shell .diagram-lines b:nth-child(3),
+.site-shell .diagram-lines b:nth-child(4),
+.site-shell .diagram-lines b:last-child {
+  background: rgba(255,255,255,.18) !important;
+}
+.site-shell .progress-line {
+  background: rgba(255,255,255,.12) !important;
+}
+.site-shell .progress-line span {
+  background: #f2f2f2 !important;
+}
+.site-shell .progress-ring circle:first-child {
+  stroke: rgba(255,255,255,.13) !important;
+}
+.site-shell .progress-ring circle:nth-child(2) {
+  stroke: #f2f2f2 !important;
+}
+.site-shell .live-indicator i,
+.site-shell .pulse-dot {
+  background: #bcbcbc !important;
+  box-shadow: none !important;
+}
+.site-shell .showcase-foot span:last-child {
+  color: #bdbdbd !important;
+}
+.site-shell .focus-day {
+  color: #f0f0f0 !important;
+  background: rgba(255,255,255,.055) !important;
+  border-color: rgba(255,255,255,.15) !important;
+}
+.site-shell .lesson-toggle,
+.site-shell .lesson-toggle-done {
+  background: rgba(255,255,255,.12) !important;
+  border-color: rgba(255,255,255,.28) !important;
+  color: #fff !important;
+}
+.site-shell .lesson-toggle:not(.lesson-toggle-done) {
+  background: rgba(0,0,0,.18) !important;
+  color: transparent !important;
+}
+.site-shell .project-check-done,
+.site-shell .lesson-complete {
+  background: rgba(255,255,255,.055) !important;
+  border-color: rgba(255,255,255,.20) !important;
+}
+.site-shell .project-check-done .project-tick {
+  background: rgba(255,255,255,.16) !important;
+  color: #fff !important;
+}
+.site-shell .check-row input,
+.site-shell .project-check input {
+  accent-color: #f2f2f2 !important;
+}
+.site-shell .lesson-card-main,
+.site-shell .showcase-foot,
+.site-shell .aside-stat,
+.site-shell .lesson-resources,
+.site-shell .project-check,
+.site-shell .site-footer {
+  border-color: rgba(255,255,255,.12) !important;
+}
+.site-shell .search-field input {
+  color: #fff !important;
+}
+.site-shell .search-field input::placeholder {
+  color: #888 !important;
+}
+.site-shell ::selection {
+  background: rgba(255,255,255,.22);
+  color: #fff;
+}
+
+/* Every actual button turns jade only on hover or press. No glow. */
+.site-shell button,
+.site-shell .jade-button,
+.site-shell .tool-button {
+  transition: background-color .16s ease, color .16s ease, border-color .16s ease, transform .16s ease;
+}
+.site-shell button:hover,
+.site-shell button:active,
+.site-shell .jade-button:hover,
+.site-shell .jade-button:active,
+.site-shell .tool-button:hover {
+  background: #15966b !important;
+  border-color: #15966b !important;
+  color: #fff !important;
+  box-shadow: none !important;
+}
+.site-shell button:hover *,
+.site-shell button:active *,
+.site-shell .jade-button:hover *,
+.site-shell .jade-button:active *,
+.site-shell .tool-button:hover * {
+  color: #fff !important;
+}
+.site-shell .tool-button:hover {
+  transform: translateY(-1px);
+}
+.site-shell .chapter-card:hover {
+  background: rgba(255,255,255,.065) !important;
+}
+.site-shell a.jade-button {
+  background: #171717 !important;
+  border-color: rgba(255,255,255,.24) !important;
+  color: #fff !important;
+}
+.site-shell a.jade-button:hover,
+.site-shell a.jade-button:active {
+  background: #15966b !important;
+  border-color: #15966b !important;
+  color: #fff !important;
+}
+.site-shell a.resource-tile:hover,
+.site-shell a.resource-tile:active {
+  color: #fff !important;
+}
+.site-shell a.resource-tile:hover * {
+  color: #fff !important;
+}
+.site-shell button:focus-visible,
+.site-shell a:focus-visible,
+.site-shell input:focus-visible {
+  outline: 2px solid rgba(255,255,255,.75) !important;
+  outline-offset: 3px;
+}
+@media (max-width: 760px) {
+  .site-shell:before {
+    background-position: right -200px top 90px;
+    background-size: 900px auto;
+    opacity: .28;
+  }
+}
+@media (prefers-reduced-transparency: reduce) {
+  .site-shell .site-header,
+  .site-shell .main-nav,
+  .site-shell .glass-panel,
+  .site-shell .progress-showcase,
+  .site-shell .next-focus,
+  .site-shell .roadmap-overview,
+  .site-shell .roadmap-aside,
+  .site-shell .chapter-card,
+  .site-shell .lesson-card,
+  .site-shell .resource-feature,
+  .site-shell .resource-tile,
+  .site-shell .capstone-panel,
+  .site-shell .project-check,
+  .site-shell .github-note,
+  .site-shell .confirm-dialog,
+  .site-shell .toast-message {
+    background: rgba(18,18,18,.94) !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
+}
