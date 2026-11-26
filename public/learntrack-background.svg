@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1000" fill="none">
+  <defs>
+    <linearGradient id="screen" x1="930" y1="180" x2="1470" y2="730" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#fff" stop-opacity=".075"/>
+      <stop offset="1" stop-color="#fff" stop-opacity=".015"/>
+    </linearGradient>
+    <pattern id="dots" width="22" height="22" patternUnits="userSpaceOnUse">
+      <circle cx="2" cy="2" r="1.2" fill="#fff" fill-opacity=".20"/>
+    </pattern>
+    <clipPath id="meshClip"><path d="M620 690C820 545 970 765 1160 590s300-20 440-170v450H620z"/></clipPath>
+  </defs>
+
+  <!-- Subtle data-learning mesh -->
+  <g opacity=".42">
+    <path d="M480 690C710 520 850 760 1050 610s330-30 500-190" stroke="#fff" stroke-opacity=".16" stroke-width="2"/>
+    <path d="M510 745C730 575 865 810 1085 655s315-38 475-180" stroke="#fff" stroke-opacity=".10" stroke-width="2"/>
+    <path d="M540 795C755 635 890 855 1110 700s300-45 450-170" stroke="#fff" stroke-opacity=".08" stroke-width="2"/>
+    <path d="M620 690C820 545 970 765 1160 590s300-20 440-170v450H620z" fill="url(#dots)" clip-path="url(#meshClip)"/>
+  </g>
+
+  <!-- Laptop body -->
+  <g stroke="#fff" stroke-linejoin="round">
+    <path d="M835 210Q842 184 870 180L1395 130Q1425 128 1428 157L1472 625Q1475 653 1448 660L897 720Q867 723 864 694Z"
+      fill="url(#screen)" fill-opacity=".75" stroke-opacity=".30" stroke-width="4"/>
+    <path d="M864 694L1472 625L1542 703Q1549 716 1527 722L890 809Q873 811 863 796L770 735Q756 725 772 720Z"
+      fill="#fff" fill-opacity=".025" stroke-opacity=".25" stroke-width="3"/>
+    <path d="M770 735L1542 703" stroke-opacity=".22" stroke-width="2"/>
+    <path d="M1040 757L1310 727" stroke-opacity=".18" stroke-width="2"/>
+  </g>
+
+  <!-- Code editor window -->
+  <g stroke="#fff" stroke-opacity=".32" stroke-width="2">
+    <rect x="915" y="245" width="230" height="58" rx="12" fill="#fff" fill-opacity=".035"/>
+    <path d="M950 263L934 274L950 286M975 263L991 274L975 286M1004 286L1020 263" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M930 340H1150M930 375H1090M930 410H1120M930 445H1050M930 480H1110" stroke-linecap="round" stroke-opacity=".19" stroke-width="8"/>
+    <path d="M930 515H1070M930 550H1135" stroke-linecap="round" stroke-opacity=".12" stroke-width="8"/>
+  </g>
+
+  <!-- Analytics panels -->
+  <g stroke="#fff" stroke-opacity=".27" stroke-width="2">
+    <rect x="1170" y="260" width="220" height="178" rx="17" fill="#fff" fill-opacity=".025"/>
+    <path d="M1205 402V365H1232V402M1250 402V340H1277V402M1295 402V310H1322V402M1340 402V285H1367V402" fill="#fff" fill-opacity=".14" stroke="none"/>
+    <path d="M1200 410H1370" stroke-opacity=".18"/>
+    <rect x="1170" y="465" width="220" height="145" rx="17" fill="#fff" fill-opacity=".02"/>
+    <path d="M1194 573L1237 540L1270 552L1310 505L1345 520L1370 486" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+    <circle cx="1370" cy="486" r="5" fill="#fff" fill-opacity=".6" stroke="none"/>
+  </g>
+
+  <!-- Database stack -->
+  <g stroke="#fff" stroke-opacity=".17" stroke-width="3">
+    <ellipse cx="650" cy="370" rx="76" ry="25"/>
+    <path d="M574 370V485C574 499 608 511 650 511S726 499 726 485V370"/>
+    <path d="M574 411C574 425 608 437 650 437S726 425 726 411M574 450C574 464 608 476 650 476S726 464 726 450"/>
+  </g>
+
+  <!-- Notebook / learning checklist -->
+  <g stroke="#fff" stroke-opacity=".16" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="330" y="480" width="210" height="270" rx="18" transform="rotate(-8 330 480)" fill="#fff" fill-opacity=".018"/>
+    <path d="M373 548L389 561L415 530M435 548H500M365 615L381 628L407 597M427 615H490M357 682L373 695L399 664M419 682H474" />
+  </g>
+
+  <!-- Small floating chart grid -->
+  <g stroke="#fff" stroke-opacity=".12" stroke-width="2">
+    <path d="M210 260H470M210 300H470M210 340H470M210 380H470M250 220V420M310 220V420M370 220V420M430 220V420"/>
+    <path d="M230 390L288 350L340 365L402 295L458 315" stroke-opacity=".22" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+</svg>
