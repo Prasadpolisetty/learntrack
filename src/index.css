@@ -769,7 +769,7 @@ body {
   inset: 0;
   z-index: 0;
   pointer-events: none;
-  background-image: url("./learntrack-background.svg");
+  background-image: url("/learntrack-background.svg");
   background-repeat: no-repeat;
   background-position: right -55px top 70px;
   background-size: min(1080px, 88vw) auto;
@@ -1095,4 +1095,24 @@ body {
     backdrop-filter: none !important;
     -webkit-backdrop-filter: none !important;
   }
+}
+
+
+/* Highest-priority hover rule: every button uses jade only while hovered/pressed. */
+#root .site-shell button:hover,
+#root .site-shell button:active,
+#root .site-shell label.tool-button:hover,
+#root .site-shell .jade-button:hover,
+#root .site-shell a.jade-button:active {
+  background: #15966b !important;
+  border-color: #15966b !important;
+  color: #fff !important;
+  box-shadow: none !important;
+}
+#root .site-shell button:hover *,
+#root .site-shell button:active *,
+#root .site-shell label.tool-button:hover *,
+#root .site-shell .jade-button:hover *,
+#root .site-shell a.jade-button:active * {
+  color: #fff !important;
 }
