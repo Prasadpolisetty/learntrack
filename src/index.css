@@ -1160,3 +1160,739 @@ body {
 .site-shell .project-summary-row h2 small {
   color: #a5a5a5 !important;
 }
+
+
+/* APPROVED LEARNTRACK DASHBOARD LAYOUT */
+.site-shell:before {
+  display: none !important;
+  background: none !important;
+}
+.site-shell .site-header,
+.site-shell .main-content,
+.site-shell .site-footer {
+  width: min(1420px, calc(100% - 72px));
+}
+.site-shell .site-header {
+  min-height: 78px;
+  border-bottom: 1px solid rgba(255,255,255,.12) !important;
+  background: rgba(5,5,5,.56) !important;
+}
+.site-shell .brand-mark {
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  background: rgba(255,255,255,.045) !important;
+  color: #fff !important;
+  border: 1px solid rgba(255,255,255,.14) !important;
+}
+.site-shell .brand-copy strong {
+  font-size: 21px;
+  letter-spacing: -.045em;
+}
+.site-shell .brand-copy small {
+  font-size: 8px;
+  letter-spacing: .16em;
+}
+.site-shell .main-nav {
+  gap: 5px;
+  padding: 5px;
+  border-radius: 999px;
+  background: rgba(255,255,255,.025) !important;
+  border: 1px solid rgba(255,255,255,.10) !important;
+}
+.site-shell .nav-tab {
+  padding: 10px 14px;
+  color: #d0d0d0 !important;
+  border: 1px solid transparent !important;
+  background: transparent !important;
+  font-size: 11px;
+}
+.site-shell .nav-tab-active {
+  background: rgba(255,255,255,.075) !important;
+  border-color: rgba(255,255,255,.18) !important;
+  color: #fff !important;
+}
+.site-shell .header-tools {
+  gap: 8px;
+}
+.site-shell .tool-button {
+  padding: 10px 13px;
+  border-radius: 999px;
+  color: #d2d2d2 !important;
+}
+
+.site-shell .welcome-topline {
+  align-items: center;
+  padding: 28px 0 0;
+}
+.site-shell .welcome-topline .eyebrow {
+  font-size: 10px;
+  letter-spacing: .18em;
+  color: #b8b8b8 !important;
+}
+.site-shell .welcome-date {
+  color: #929292 !important;
+  font-size: 8px;
+  letter-spacing: .14em;
+}
+.site-shell .intro-layout {
+  position: relative;
+  isolation: isolate;
+  display: block;
+  min-height: 390px;
+  padding: 22px 0 40px;
+  margin: 0 -16px;
+}
+.site-shell .intro-layout:before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: -12px -38px -12px;
+  pointer-events: none;
+  border-radius: 20px;
+  background-image:
+    linear-gradient(90deg, rgba(5,5,5,.98) 0%, rgba(5,5,5,.91) 29%, rgba(5,5,5,.46) 58%, rgba(5,5,5,.20) 100%),
+    linear-gradient(0deg, rgba(5,5,5,.78) 0%, transparent 34%, rgba(5,5,5,.08) 100%),
+    url("./learntrack-hero.webp");
+  background-size: cover;
+  background-position: center 54%;
+  background-repeat: no-repeat;
+  opacity: .98;
+}
+.site-shell .intro-copy {
+  position: relative;
+  z-index: 1;
+  width: min(660px, 60%);
+  padding: 24px 16px 18px;
+}
+.site-shell .hero-kicker {
+  display: block;
+  margin: 0 0 16px;
+  color: #bcbcbc !important;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: .20em;
+}
+.site-shell .intro-copy h1 {
+  color: #fff !important;
+  font-size: clamp(58px, 6.3vw, 86px);
+  line-height: .97;
+  letter-spacing: -.075em;
+  margin: 0;
+  max-width: 680px;
+}
+.site-shell .intro-copy h1 em {
+  color: #fff !important;
+}
+.site-shell .intro-copy>p {
+  max-width: 550px;
+  margin: 20px 0 24px;
+  color: #d0d0d0 !important;
+  font-size: 15px;
+  line-height: 1.65;
+}
+.site-shell .intro-actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 14px;
+}
+.site-shell .jade-button,
+.site-shell a.jade-button {
+  min-height: 48px;
+  padding: 13px 22px;
+  color: #fff !important;
+  background: rgba(8,8,8,.72) !important;
+  border: 1px solid rgba(255,255,255,.36) !important;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 750;
+  box-shadow: none !important;
+}
+.site-shell .outline-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 48px;
+  padding: 12px 20px;
+  color: #fff !important;
+  background: rgba(8,8,8,.54);
+  border: 1px solid rgba(255,255,255,.48);
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+/* Four compact metrics, matching the approved reference */
+.site-shell .metric-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0,1fr));
+  gap: 14px;
+  margin: 8px 0 52px;
+}
+.site-shell .metric-card {
+  min-width: 0;
+  min-height: 108px;
+  display: flex;
+  align-items: center;
+  gap: 17px;
+  padding: 17px 20px;
+  border: 1px solid rgba(255,255,255,.18);
+  border-radius: 19px;
+  background: rgba(255,255,255,.045);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.04), 0 12px 28px rgba(0,0,0,.2);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+.site-shell .metric-icon {
+  width: 48px;
+  height: 48px;
+  flex: none;
+  display: grid;
+  place-items: center;
+  color: #f4f4f4 !important;
+  border: 1px solid rgba(255,255,255,.16);
+  border-radius: 14px;
+  background: rgba(255,255,255,.04);
+}
+.site-shell .metric-copy {
+  min-width: 0;
+  display: grid;
+  gap: 5px;
+}
+.site-shell .metric-copy strong {
+  color: #fff !important;
+  font-size: 19px;
+  line-height: 1.15;
+  font-weight: 760;
+  letter-spacing: -.04em;
+}
+.site-shell .metric-copy>span {
+  color: #bdbdbd !important;
+  font-size: 12px;
+  line-height: 1.35;
+}
+.site-shell .metric-progress-copy {
+  flex: 1;
+}
+.site-shell .metric-progress .progress-line {
+  margin-top: 5px;
+  width: 100%;
+  height: 7px;
+  background: rgba(255,255,255,.13) !important;
+  border: 1px solid rgba(255,255,255,.09);
+}
+.site-shell .metric-progress .progress-line span {
+  background: #f2f2f2 !important;
+}
+
+/* Three clear learning-path cards */
+.site-shell .learning-section {
+  margin: 0 0 42px;
+}
+.site-shell .learning-section-heading {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 22px;
+  margin: 0 0 20px;
+}
+.site-shell .learning-section-heading h2 {
+  margin: 7px 0 5px;
+  color: #fff !important;
+  font-size: clamp(26px, 3vw, 34px);
+  font-weight: 760;
+  line-height: 1.1;
+  letter-spacing: -.055em;
+}
+.site-shell .learning-section-heading p {
+  margin: 0;
+  color: #a7a7a7 !important;
+  font-size: 13px;
+  line-height: 1.55;
+}
+.site-shell .roadmap-action {
+  flex: none;
+  padding: 10px 16px;
+  border: 1px solid rgba(255,255,255,.28);
+  border-radius: 999px;
+}
+.site-shell .learning-path-grid {
+  display: grid;
+  grid-template-columns: repeat(3,minmax(0,1fr));
+  gap: 15px;
+}
+.site-shell .learning-path-card {
+  min-height: 194px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 20px 21px 17px;
+  overflow: hidden;
+  cursor: pointer;
+  border: 1px solid rgba(255,255,255,.17);
+  border-radius: 19px;
+  background: rgba(255,255,255,.038);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.035), 0 12px 26px rgba(0,0,0,.19);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  transition: transform .2s ease, background .2s ease, border-color .2s ease;
+}
+.site-shell .learning-path-card:hover,
+.site-shell .learning-path-card:focus-visible {
+  transform: translateY(-3px);
+  border-color: rgba(255,255,255,.33);
+  background: rgba(255,255,255,.07);
+}
+.site-shell .learning-path-card:focus-visible {
+  outline: 2px solid rgba(255,255,255,.75);
+  outline-offset: 4px;
+}
+.site-shell .learning-path-top {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 13px;
+}
+.site-shell .learning-path-icon {
+  width: 42px;
+  height: 42px;
+  display: grid;
+  place-items: center;
+  color: #f1f1f1 !important;
+  border: 1px solid rgba(255,255,255,.17);
+  border-radius: 13px;
+  background: rgba(255,255,255,.045);
+}
+.site-shell .learning-path-index {
+  color: #777 !important;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: .12em;
+}
+.site-shell .learning-path-range {
+  margin-bottom: 5px;
+  color: #a9a9a9 !important;
+  font-size: 8px;
+  font-weight: 800;
+  letter-spacing: .15em;
+}
+.site-shell .learning-path-card h3 {
+  margin: 0 0 5px;
+  color: #fff !important;
+  font-size: 17px;
+  font-weight: 720;
+  letter-spacing: -.035em;
+}
+.site-shell .learning-path-card p {
+  margin: 0 0 16px;
+  color: #aaa !important;
+  font-size: 11px;
+  line-height: 1.55;
+}
+.site-shell .learning-path-foot {
+  width: 100%;
+  margin-top: auto;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.site-shell .learning-path-foot .progress-line {
+  flex: 1;
+  height: 4px;
+  background: rgba(255,255,255,.12) !important;
+}
+.site-shell .learning-path-foot .progress-line span {
+  background: #d9d9d9 !important;
+}
+.site-shell .learning-path-foot>span {
+  color: #aaa !important;
+  font-size: 9px;
+  font-weight: 700;
+}
+.site-shell .learning-path-foot svg {
+  color: #ddd !important;
+}
+
+/* Keep the continuation panel understated under the main learning path */
+.site-shell .bottom-overview-grid {
+  display: grid;
+  grid-template-columns: 1.15fr .85fr;
+  gap: 14px;
+  margin-top: 28px;
+}
+.site-shell .next-focus {
+  padding: 22px 24px;
+  border-radius: 20px;
+}
+.site-shell .learning-note {
+  padding: 22px 24px;
+  border: 1px solid rgba(255,255,255,.13) !important;
+  border-radius: 20px;
+  background: rgba(255,255,255,.025);
+}
+.site-shell .focus-link,
+.site-shell .text-action {
+  color: #f0f0f0 !important;
+}
+
+/* Dedicated Progress page */
+.site-shell .progress-page-overview {
+  display: flex;
+  align-items: center;
+  gap: 34px;
+  padding: 26px 30px;
+  border-radius: 22px;
+}
+.site-shell .progress-page-ring {
+  position: relative;
+  width: 156px;
+  height: 156px;
+  flex: none;
+  display: grid;
+  place-items: center;
+}
+.site-shell .progress-page-ring>div {
+  position: absolute;
+  display: grid;
+  justify-items: center;
+  gap: 3px;
+}
+.site-shell .progress-page-ring strong {
+  color: #fff !important;
+  font-size: 32px;
+  letter-spacing: -.06em;
+}
+.site-shell .progress-page-ring span {
+  color: #999 !important;
+  font-size: 8px;
+  letter-spacing: .14em;
+}
+.site-shell .progress-page-copy {
+  max-width: 620px;
+}
+.site-shell .progress-page-copy h2 {
+  margin: 7px 0;
+  color: #fff !important;
+  font-size: 27px;
+  letter-spacing: -.05em;
+}
+.site-shell .progress-page-copy p {
+  margin: 0 0 16px;
+  color: #aaa !important;
+  font-size: 13px;
+  line-height: 1.65;
+}
+.site-shell .progress-metric-grid {
+  margin-top: 15px;
+  margin-bottom: 40px;
+}
+.site-shell .progress-chapter-list {
+  display: grid;
+  gap: 0;
+  padding: 8px 22px;
+  border-radius: 20px;
+}
+.site-shell .progress-chapter-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 17px 0;
+  border-bottom: 1px solid rgba(255,255,255,.10);
+}
+.site-shell .progress-chapter-row:last-child {
+  border-bottom: 0;
+}
+.site-shell .progress-chapter-icon {
+  width: 42px;
+  height: 42px;
+  flex: none;
+  display: grid;
+  place-items: center;
+  color: #eee !important;
+  border: 1px solid rgba(255,255,255,.13);
+  border-radius: 13px;
+  background: rgba(255,255,255,.04);
+}
+.site-shell .progress-chapter-details {
+  flex: 1;
+  min-width: 0;
+  display: grid;
+  gap: 5px;
+}
+.site-shell .progress-chapter-details strong {
+  color: #f4f4f4 !important;
+  font-size: 13px;
+}
+.site-shell .progress-chapter-details>span {
+  color: #929292 !important;
+  font-size: 8px;
+  letter-spacing: .12em;
+}
+.site-shell .progress-chapter-details .progress-line {
+  height: 5px;
+  max-width: 540px;
+  background: rgba(255,255,255,.12) !important;
+}
+.site-shell .progress-chapter-details .progress-line span {
+  background: #e4e4e4 !important;
+}
+.site-shell .progress-chapter-count {
+  min-width: 46px;
+  color: #c4c4c4 !important;
+  text-align: right;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+/* Dark glass styling for roadmap, resource and project views */
+.site-shell .page-section {
+  padding-top: 44px;
+}
+.site-shell .page-intro {
+  max-width: 800px;
+  padding: 8px 0 25px;
+}
+.site-shell .page-intro h1 {
+  color: #fff !important;
+  font-size: clamp(46px,5.5vw,68px);
+  letter-spacing: -.07em;
+}
+.site-shell .page-intro h1 span {
+  color: #fff !important;
+}
+.site-shell .page-intro p {
+  color: #aaa !important;
+  font-size: 13px;
+}
+.site-shell .roadmap-overview,
+.site-shell .resource-feature,
+.site-shell .capstone-panel {
+  background: rgba(255,255,255,.035) !important;
+  border: 1px solid rgba(255,255,255,.14) !important;
+}
+.site-shell .roadmap-overview-number strong,
+.site-shell .roadmap-overview-number span,
+.site-shell .overview-bar-top b,
+.site-shell .overview-bar-top span,
+.site-shell .roadmap-overview-note,
+.site-shell .aside-stat,
+.site-shell .aside-stat b {
+  color: #eee !important;
+}
+.site-shell .filter-button,
+.site-shell .search-field {
+  background: rgba(255,255,255,.035) !important;
+  border-color: rgba(255,255,255,.16) !important;
+  color: #e4e4e4 !important;
+}
+.site-shell .filter-active {
+  background: rgba(255,255,255,.12) !important;
+  color: #fff !important;
+  border-color: rgba(255,255,255,.25) !important;
+}
+.site-shell .lesson-card,
+.site-shell .resource-tile,
+.site-shell .project-check {
+  background: rgba(255,255,255,.035) !important;
+  border: 1px solid rgba(255,255,255,.14) !important;
+}
+.site-shell .lesson-open strong,
+.site-shell .lesson-open small,
+.site-shell .lesson-kicker,
+.site-shell .lesson-completion,
+.site-shell .expanded-label,
+.site-shell .check-row,
+.site-shell .lesson-resources>span,
+.site-shell .lesson-resources a,
+.site-shell .resource-tile>strong,
+.site-shell .resource-tile>p,
+.site-shell .resource-stage,
+.site-shell .resource-open,
+.site-shell .project-task-copy,
+.site-shell .project-number {
+  color: #ededed !important;
+}
+.site-shell .lesson-expanded {
+  background: rgba(255,255,255,.025) !important;
+}
+.site-shell .resource-section-head h2,
+.site-shell .resource-feature h2,
+.site-shell .project-summary-row h2,
+.site-shell .roadmap-aside h3 {
+  color: #fff !important;
+}
+.site-shell .resource-feature p,
+.site-shell .roadmap-aside>p,
+.site-shell .project-summary-row h2 small {
+  color: #a6a6a6 !important;
+}
+.site-shell .capstone-panel {
+  background: rgba(255,255,255,.035) !important;
+}
+.site-shell .project-check-done {
+  background: rgba(255,255,255,.075) !important;
+  border-color: rgba(255,255,255,.22) !important;
+}
+.site-shell .project-tick,
+.site-shell .project-check-done .project-tick {
+  background: rgba(255,255,255,.16) !important;
+  color: #fff !important;
+}
+.site-shell .site-footer {
+  border-top-color: rgba(255,255,255,.13) !important;
+  color: #888 !important;
+}
+
+/* Jade is an interaction state only. Default UI remains monochrome. */
+.site-shell .jade-button:hover,
+.site-shell .jade-button:active,
+.site-shell .outline-button:hover,
+.site-shell .outline-button:active,
+.site-shell button:hover,
+.site-shell button:active,
+.site-shell .tool-button:hover,
+.site-shell .tool-button:active {
+  background: #15966b !important;
+  color: #fff !important;
+  border-color: #15966b !important;
+  box-shadow: none !important;
+}
+.site-shell button:hover *,
+.site-shell button:active *,
+.site-shell .tool-button:hover *,
+.site-shell .tool-button:active * {
+  color: #fff !important;
+}
+
+@media (max-width: 1100px) {
+  .site-shell .site-header,
+  .site-shell .main-content,
+  .site-shell .site-footer {
+    width: calc(100% - 48px);
+  }
+  .site-shell .metric-grid {
+    grid-template-columns: repeat(2,minmax(0,1fr));
+  }
+}
+@media (max-width: 760px) {
+  .site-shell .site-header,
+  .site-shell .main-content,
+  .site-shell .site-footer {
+    width: calc(100% - 30px);
+  }
+  .site-shell .site-header {
+    grid-template-columns: 1fr auto;
+  }
+  .site-shell .main-nav {
+    grid-template-columns: repeat(5,1fr);
+    display: grid;
+  }
+  .site-shell .nav-tab {
+    justify-content: center;
+    padding: 9px 5px;
+    font-size: 8px;
+  }
+  .site-shell .nav-tab svg {
+    display: none;
+  }
+  .site-shell .intro-layout {
+    min-height: 360px;
+    margin: 0 -7px;
+    padding-top: 22px;
+  }
+  .site-shell .intro-layout:before {
+    inset: 0 -12px 0;
+    background-position: 63% center;
+    background-image:
+      linear-gradient(90deg, rgba(5,5,5,.98) 0%, rgba(5,5,5,.83) 45%, rgba(5,5,5,.45) 100%),
+      linear-gradient(0deg, rgba(5,5,5,.82) 0%, transparent 48%),
+      url("./learntrack-hero.webp");
+  }
+  .site-shell .intro-copy {
+    width: min(620px,100%);
+    padding: 20px 12px;
+  }
+  .site-shell .intro-copy h1 {
+    font-size: clamp(49px,11vw,68px);
+  }
+  .site-shell .intro-copy>p {
+    max-width: 480px;
+    font-size: 13px;
+  }
+  .site-shell .metric-grid {
+    gap: 9px;
+    margin-top: 10px;
+    margin-bottom: 36px;
+  }
+  .site-shell .metric-card {
+    min-height: 88px;
+    gap: 11px;
+    padding: 13px;
+  }
+  .site-shell .metric-icon {
+    width: 38px;
+    height: 38px;
+  }
+  .site-shell .metric-copy strong {
+    font-size: 15px;
+  }
+  .site-shell .metric-copy>span {
+    font-size: 10px;
+  }
+  .site-shell .learning-section-heading {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .site-shell .learning-path-grid {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+  .site-shell .learning-path-card {
+    min-height: 174px;
+  }
+  .site-shell .bottom-overview-grid {
+    grid-template-columns: 1fr;
+  }
+  .site-shell .progress-page-overview {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+    padding: 20px;
+  }
+  .site-shell .progress-page-ring {
+    align-self: center;
+  }
+}
+@media (max-width: 420px) {
+  .site-shell .header-tools .tool-button {
+    padding: 8px 9px;
+  }
+  .site-shell .metric-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+  .site-shell .metric-card {
+    align-items: flex-start;
+    flex-direction: column;
+    min-height: 116px;
+  }
+  .site-shell .metric-progress {
+    grid-column: 1 / -1;
+    flex-direction: row;
+    align-items: center;
+  }
+  .site-shell .metric-progress-copy {
+    width: 100%;
+  }
+  .site-shell .progress-chapter-row {
+    gap: 10px;
+  }
+  .site-shell .progress-chapter-icon {
+    width: 34px;
+    height: 34px;
+  }
+}
