@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
+import heroBackground from "./learntrack-hero.webp";
 import {
   Activity, ArrowDownToLine, ArrowRight, ArrowUpRight, BookOpen,
   BookOpenCheck, CalendarDays, Check, CheckCircle2, ChevronDown,
@@ -140,6 +141,7 @@ function App() {
   const activeLabel = navItems.find(item=>item[0]===page)?.[1] || "Overview";
 
   return <div className="site-shell">
+    <div className="site-background" aria-hidden="true"><img src={heroBackground} alt="" /></div>
     <header className="site-header">
       <a className="brand-lockup" href="#top" onClick={e=>{e.preventDefault();navigate("overview");}}>
         <span className="brand-mark"><GraduationCap size={21}/></span>
