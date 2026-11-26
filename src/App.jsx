@@ -69,10 +69,10 @@ const projectTasks = [
 
 const STORAGE_KEY = "learntrack-progress-v1";
 const chapters = [
-  {key:"SQL",number:"01",name:"Query the data",range:"DAYS 01–07",description:"SQL essentials",icon:Database},
-  {key:"Python",number:"02",name:"Speak Python",range:"DAYS 08–14",description:"Programming basics",icon:Code2},
-  {key:"Analysis",number:"03",name:"Find the story",range:"DAYS 15–21",description:"Pandas and visualisation",icon:Activity},
-  {key:"Project",number:"04",name:"Make it real",range:"DAYS 22–30",description:"Your portfolio project",icon:Target}
+  {key:"SQL",number:"01",name:"SQL Learning",range:"DAYS 01–07",description:"Query data with confidence.",icon:Database},
+  {key:"Python",number:"02",name:"Python Foundations",range:"DAYS 08–14",description:"Learn Python and core programming.",icon:Code2},
+  {key:"Analysis",number:"03",name:"Data Analysis",range:"DAYS 15–21",description:"Clean, explore and explain real data.",icon:Activity},
+  {key:"Project",number:"04",name:"Portfolio Project",range:"DAYS 22–30",description:"Build and present your portfolio.",icon:Target}
 ];
 const navItems = [
   ["overview","Dashboard",Layers3],
@@ -86,6 +86,28 @@ function readSaved() {
   try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}"); }
   catch { return {}; }
 }
+function mergeProgress(current,incoming) {
+  const merged={...current,...incoming};
+  roadmap.forEach((day,dayIndex)=>{
+    const currentTasks=current[dayIndex]?.tasks || {};
+    const importedTasks=incoming[dayIndex]?.tasks || {};
+    const tasks=Object.fromEntries(day[4].map((_,taskIndex)=>[
+      taskIndex,!!currentTasks[taskIndex]||!!importedTasks[taskIndex]
+    ]));
+    merged[dayIndex]={
+      ...(current[dayIndex]||{}),
+      ...(incoming[dayIndex]||{}),
+      tasks,
+      done:day[4].every((_,taskIndex)=>!!tasks[taskIndex])
+    };
+  });
+  const project={...(current.project||{}),...(incoming.project||{})};
+  projectTasks.forEach((_,index)=>{
+    project[index]=!!current.project?.[index]||!!incoming.project?.[index];
+  });
+  merged.project=project;
+  return merged;
+}
 
 function App() {
   const [progress,setProgress] = useState(readSaved);
@@ -95,6 +117,7 @@ function App() {
   const [expanded,setExpanded] = useState(0);
   const [toast,setToast] = useState("");
   const [confirmReset,setConfirmReset] = useState(false);
+  const [pendingImport,setPendingImport] = useState(null);
   useEffect(() => { localStorage.setItem(STORAGE_KEY,JSON.stringify(progress)); },[progress]);
 
   const completedDays = roadmap.filter((_,i) => !!progress[i]?.done).length;
@@ -124,14 +147,25 @@ function App() {
     notify("Your progress backup is ready");
   };
   const importProgress = async event => {
-    const file=event.target.files?.[0];
+    const input=event.target;
+    const file=input.files?.[0];
     if(!file) return;
     try {
       const parsed=JSON.parse(await file.text());
-      if(!parsed.progress || typeof parsed.progress!=="object") throw new Error("Invalid backup");
-      setProgress(parsed.progress);notify("Your progress has been restored");
-    } catch { notify("This is not a valid LearnTrack backup"); }
-    event.target.value="";
+      if(!parsed.progress || typeof parsed.progress!=="object" || Array.isArray(parsed.progress)) throw new Error("Invalid backup");
+      const incoming=parsed.progress;
+      const days=roadmap.filter((_,index)=>!!incoming[index]?.done).length;
+      const tasks=roadmap.reduce((sum,day,index)=>sum+day[4].filter((_,taskIndex)=>!!incoming[index]?.tasks?.[taskIndex]).length,0);
+      setPendingImport({progress:incoming,fileName:file.name,days,tasks});
+    } catch { notify("This file is not a valid LearnTrack backup. Choose a JSON backup exported from LearnTrack."); }
+    finally { input.value=""; }
+  };
+  const applyImport = mode => {
+    if(!pendingImport) return;
+    if(mode==="merge") setProgress(current=>mergeProgress(current,pendingImport.progress));
+    else setProgress(pendingImport.progress);
+    setPendingImport(null);
+    notify(mode==="merge"?"Backup merged with saved progress":"Backup replaced saved progress");
   };
   const resetProgress = () => {setProgress({});setConfirmReset(false);notify("Progress has been reset");};
   const filteredDays = useMemo(() => roadmap.map((day,index)=>({day,index})).filter(({day}) =>
@@ -251,6 +285,7 @@ function App() {
 
     <footer className="site-footer"><a className="footer-brand" href="#top" onClick={e=>{e.preventDefault();navigate("overview");}}>learntrack<span>.</span></a><span>Made for steady progress, not perfect streaks.</span><div><span>30 DAYS</span><i/> <span>SQL + PYTHON</span></div></footer>
 
+    {pendingImport&&<div className="modal-backdrop" onClick={()=>setPendingImport(null)}><div className="confirm-dialog import-dialog" role="dialog" aria-modal="true" aria-labelledby="import-title" aria-describedby="import-description" onClick={e=>e.stopPropagation()} onKeyDown={e=>{if(e.key==="Escape")setPendingImport(null);}}><span className="confirm-icon"><ArrowUpRight size={19}/></span><h3 id="import-title">Import progress backup?</h3><p id="import-description"><strong>{pendingImport.fileName}</strong> contains {pendingImport.days} completed days and {pendingImport.tasks} checked lesson tasks. This browser has {completedDays} completed days and {completedTasks} checked lesson tasks. Merge keeps checked tasks from either version; replace uses only this backup.</p><div className="import-choice-row"><button className="soft-button" onClick={()=>applyImport("merge")}>Merge checked tasks</button><button className="jade-button" onClick={()=>applyImport("replace")}>Replace saved progress</button></div><button className="text-action import-cancel" onClick={()=>setPendingImport(null)}>Cancel</button></div></div>}
     {confirmReset&&<div className="modal-backdrop" onClick={()=>setConfirmReset(false)}><div className="confirm-dialog" role="dialog" aria-modal="true" onClick={e=>e.stopPropagation()}><span className="confirm-icon"><RotateCcw size={19}/></span><h3>Start with a clean slate?</h3><p>This clears completed days, tasks and portfolio steps saved in this browser. Export a backup first if you may need it.</p><div><button className="soft-button" onClick={()=>setConfirmReset(false)}>Keep my progress</button><button className="jade-button" onClick={resetProgress}>Reset progress</button></div></div></div>}
     {toast&&<div className="toast-message"><CheckCircle2 size={16}/>{toast}</div>}
   </div>;
@@ -268,37 +303,21 @@ function ProgressRing({percent,size=120}) {
   </svg>;
 }
 function Overview({completedDays,completedTasks,totalTasks,percent,projectDone,nextIndex,nextDay,progress,navigate,setFilter,setExpanded}) {
-  const learningPaths = [
-    {
-      title:"SQL Learning",
-      range:"DAYS 01–07",
-      detail:"From database basics to confident real-data queries.",
-      icon:Database,
-      indexes:roadmap.map((day,index)=>day[0]==="SQL"?index:-1).filter(index=>index>=0),
-      firstIndex:0,
-      filter:"SQL"
-    },
-    {
-      title:"Python & Data Analysis",
-      range:"DAYS 08–21",
-      detail:"Learn Python, Pandas and how to find meaning in data.",
-      icon:Code2,
-      indexes:roadmap.map((day,index)=>(day[0]==="Python"||day[0]==="Analysis")?index:-1).filter(index=>index>=0),
-      firstIndex:7,
-      filter:"All"
-    },
-    {
-      title:"Portfolio Project",
-      range:"DAYS 22–30",
-      detail:"Bring your skills together in a practical retail project.",
-      icon:Layers3,
-      indexes:roadmap.map((day,index)=>day[0]==="Project"?index:-1).filter(index=>index>=0),
-      firstIndex:21,
-      filter:"Project"
-    }
-  ].map(item=>{
-    const done=item.indexes.filter(index=>!!progress[index]?.done).length;
-    return {...item,done,total:item.indexes.length,percent:Math.round(done/item.indexes.length*100)};
+  const learningPaths = chapters.map(chapter=>{
+    const indexes=roadmap.map((day,index)=>day[0]===chapter.key?index:-1).filter(index=>index>=0);
+    const done=indexes.filter(index=>!!progress[index]?.done).length;
+    return {
+      title:chapter.name,
+      range:chapter.range,
+      detail:chapter.description,
+      icon:chapter.icon,
+      indexes,
+      firstIndex:indexes[0] ?? 0,
+      filter:chapter.key,
+      done,
+      total:indexes.length,
+      percent:Math.round(done/indexes.length*100)
+    };
   });
 
   return <section className="overview-page">
@@ -314,11 +333,15 @@ function Overview({completedDays,completedTasks,totalTasks,percent,projectDone,n
         <p>A practical, step-by-step plan to learn SQL and Python, apply them to real data, and build a portfolio project you can show with confidence.</p>
         <div className="intro-actions">
           <button className="jade-button" onClick={()=>{navigate("roadmap");setFilter("All");setExpanded(Math.max(0,nextIndex));}}>
-            {nextDay?("Start with Day "+String(nextIndex+1).padStart(2,"0")):"Review your roadmap"} <ArrowRight size={16}/>
+            {nextDay?("Open Day "+String(nextIndex+1).padStart(2,"0")):"Review your roadmap"} <ArrowRight size={16}/>
           </button>
           <button className="outline-button" onClick={()=>navigate("roadmap")}><CalendarDays size={16}/> View Roadmap</button>
         </div>
       </div>
+      <section className="next-focus glass-panel next-focus-hero">
+        <div className="focus-label"><span className="eyebrow">PICK UP WHERE YOU LEFT OFF</span><span className="focus-day">{nextDay?"DAY "+String(nextIndex+1).padStart(2,"0"):"ALL DAYS COMPLETE"}</span></div>
+        {nextDay?<><h2>{nextDay[2]}</h2><p>{nextDay[3]}</p><div className="focus-checklist">{nextDay[4].slice(0,2).map((task,index)=><div key={index}><span>{index+1}</span>{task}</div>)}</div><button className="focus-link" onClick={()=>{navigate("roadmap");setFilter("All");setExpanded(nextIndex);}}>Continue Learning <ArrowRight size={15}/></button></>:<><h2>You completed the 30-day roadmap.</h2><p>Review your portfolio project and keep building on what you have learned.</p><button className="focus-link" onClick={()=>navigate("project")}>Review your project <ArrowRight size={15}/></button></>}
+      </section>
     </div>
 
     <div className="metric-grid" id="progress-summary">
@@ -332,7 +355,7 @@ function Overview({completedDays,completedTasks,totalTasks,percent,projectDone,n
       </article>
       <article className="metric-card">
         <span className="metric-icon"><Code2 size={25}/></span>
-        <div className="metric-copy"><strong>1 Project</strong><span>Portfolio Ready</span></div>
+        <div className="metric-copy"><strong>1 Project</strong><span>Portfolio project</span></div>
       </article>
       <article className="metric-card metric-progress">
         <span className="metric-icon"><Activity size={25}/></span>
@@ -382,10 +405,7 @@ function Overview({completedDays,completedTasks,totalTasks,percent,projectDone,n
     </section>
 
     <div className="bottom-overview-grid">
-      <section className="next-focus glass-panel">
-        <div className="focus-label"><span className="eyebrow">PICK UP WHERE YOU LEFT OFF</span><span className="focus-day">{nextDay?"DAY "+String(nextIndex+1).padStart(2,"0"):"ALL DAYS COMPLETE"}</span></div>
-        {nextDay?<><h2>{nextDay[2]}</h2><p>{nextDay[3]}</p><div className="focus-checklist">{nextDay[4].slice(0,2).map((task,index)=><div key={index}><span>{index+1}</span>{task}</div>)}</div><button className="focus-link" onClick={()=>{navigate("roadmap");setFilter("All");setExpanded(nextIndex);}}>Continue Learning <ArrowRight size={15}/></button></>:<><h2>You completed the 30-day roadmap.</h2><p>Review your portfolio project and keep building on what you have learned.</p><button className="focus-link" onClick={()=>navigate("project")}>Review your project <ArrowRight size={15}/></button></>}
-      </section>
+      
       <section className="learning-note">
         <span className="note-icon"><BookOpenCheck size={20}/></span>
         <span className="eyebrow">A NOTE ON CONSISTENCY</span>
