@@ -1116,3 +1116,47 @@ body {
 #root .site-shell a.jade-button:active * {
   color: #fff !important;
 }
+
+
+/* Final dark-theme contrast pass for controls and card headings. */
+.site-shell .nav-tab,
+.site-shell .nav-tab-active,
+.site-shell .tool-button,
+.site-shell .filter-button,
+.site-shell .filter-active,
+.site-shell .quiet-link,
+.site-shell .text-action,
+.site-shell .focus-link,
+.site-shell .lesson-chevron,
+.site-shell .soft-button {
+  color: #f0f0f0 !important;
+  background: rgba(255,255,255,.035) !important;
+  border-color: rgba(255,255,255,.15) !important;
+}
+.site-shell .nav-tab-active,
+.site-shell .filter-active {
+  color: #fff !important;
+  background: rgba(255,255,255,.11) !important;
+  border-color: rgba(255,255,255,.20) !important;
+}
+.site-shell .chapter-card h3,
+.site-shell .resource-tile>strong,
+.site-shell .focus-checklist>div,
+.site-shell .check-row,
+.site-shell .lesson-resources a,
+.site-shell .project-number,
+.site-shell .lesson-chevron,
+.site-shell .lesson-toggle,
+.site-shell .empty-state strong {
+  color: #f2f2f2 !important;
+}
+.site-shell .lesson-resources a,
+.site-shell .resource-open {
+  color: #dedede !important;
+}
+.site-shell .focus-link {
+  border-bottom-color: rgba(255,255,255,.20) !important;
+}
+.site-shell .project-summary-row h2 small {
+  color: #a5a5a5 !important;
+}
